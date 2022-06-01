@@ -10,7 +10,8 @@
     "api": "nodemon",
     "swagger": "tsoa spec-and-routes",
     "clean": "rimraf build",
-    "build": "npm run clean && npm run swagger && tsc && copyfiles public/**/* build/"
+    "build": "npm run clean && npm run swagger && tsc && copyfiles public/**/* build/",
+    "test:types": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
