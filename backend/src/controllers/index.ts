@@ -1,3 +1,4 @@
 import { sshConnection } from "./ssh.controller";
+import { mailAuth, connected } from "../controllers/auth.controller";
 
-export { sshConnection };
+export { mailAuth, connected, sshConnection };
