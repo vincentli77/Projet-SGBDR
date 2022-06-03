@@ -1,12 +1,3 @@
-import { Request, Response } from "express";
+import { sshConnection } from "./ssh.controller";
 
-/**
- * GET /
- * Home page.
- */
-export const index = async (req: Request, res: Response): Promise<void> => {
-	res.json({ name: "Hello World" });
-
-	return;
-};
-
+export { sshConnection };

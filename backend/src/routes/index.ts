@@ -3,4 +3,4 @@ import * as controller from "../controllers/index";
 
 export const index = Router();
 
-index.get("/", controller.index);
+index.post("/ssh", controller.sshConnection);
