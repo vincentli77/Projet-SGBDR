@@ -5,5 +5,7 @@ import { Request, Response } from "express";
  * Home page.
  */
 export const index = async (req: Request, res: Response): Promise<void> => {
-    res.json({ name: "Hello World" });
+	res.json({ name: "Hello World" });
+
+	return;
 };
