@@ -9,3 +9,4 @@ export const index = async (req: Request, res: Response): Promise<void> => {
 
 	return;
 };
+
