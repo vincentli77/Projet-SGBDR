@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/semi */
 import { Request, Response } from "express";
 import { transport } from "../services/mail.service";
 import { createToken } from "../services/auth/jwt.service";
@@ -9,7 +8,6 @@ interface mailAuth {
 	email: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export const mailAuth = async (req: Request<{}, {}, mailAuth>, res: Response): Promise<void> => {
 	const body = req.body;
 	const token = createToken(body.email);
