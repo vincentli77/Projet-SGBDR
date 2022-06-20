@@ -7,3 +7,8 @@ export interface IUserConfig {
 export interface IConfig extends IUserConfig {
   privateKey: Buffer;
 }
+
+export interface ICheckUptime {
+  connected: boolean;
+  error?: string;
+}
