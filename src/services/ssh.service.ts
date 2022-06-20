@@ -1,34 +1,33 @@
 import { sshUserConfig } from '../configs/ssh.config';
 import { Client } from 'ssh2';
-import { IUserConfig } from '../interfaces/ssh';
+import { IUserConfig, ICheckUptime } from '../interfaces/ssh';
 
-interface ICheckUptime {
-  connected: boolean;
-  message?: string;
-}
-
-
-export const checkUptime = async (userConfig: IUserConfig): ICheckUptime => {
+export const checkUptime = async (userConfig: IUserConfig): Promise<ICheckUptime> => {
   const connection = new Client();
 
   const config = sshUserConfig(userConfig);
 
   // TODO: [not urgent, not urgent] find better name
-  const _: ICheckUptime = {
+  const status: ICheckUptime = {
     connected: false,
   };
 
-  connection
-    .on("ready", async () => {
-      _.connected = true;
-    })
-    .on("error", (err) => {
-      _.message = `${err.level} ${err?.description}`;
-      connection.end();
-    })
-    .on("end", () => connection.end())
-    .connect(config);
-
-  // TODO: [urgent, not urgent] find a way to return after connection success  
-  return _;
+  return await new Promise<ICheckUptime>(
+    (resolve) => {
+      connection
+        .on("ready", () => {
+          status.connected = true;
+          connection.end();
+        })
+        // TODO: [urgent, not urgent] implement error message
+        .on("error", (error) => {
+          status.error = `${error.level}`;
+          resolve(status)
+        })
+        .on("end", () => {
+          resolve(status)
+        })
+        .connect(config)
+    }
+  )
 };
