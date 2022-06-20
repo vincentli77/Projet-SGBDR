@@ -7,5 +7,10 @@ export const sshConnection = async (req: Request, res: Response): Promise<void> 
   // TODO: [urgent, not urgent] implement error message
   if(!host || !port || !username) return;
 
-  console.log(checkUptime({ host, port, username }));
+  const status = await checkUptime({ host, port, username })
+
+  // If no status
+  if(!status) return
+
+  res.status(200).send('Yeah!')
 };
