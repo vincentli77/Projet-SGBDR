@@ -5,4 +5,4 @@ export const index = Router();
 
 index.post("/ssh", controller.sshConnection);
 index.post("/login", controller.mailAuth);
-index.get("/connected", controller.connected);
+index.get("/", controller.authenticateToken);
