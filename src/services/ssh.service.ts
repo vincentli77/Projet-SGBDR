@@ -7,7 +7,6 @@ export const checkUptime = async (userConfig: IUserConfig): Promise<ICheckUptime
 
   const config = sshUserConfig(userConfig);
 
-  // TODO: [not urgent, not urgent] find better name
   const status: ICheckUptime = {
     connected: false,
   };
@@ -19,15 +18,14 @@ export const checkUptime = async (userConfig: IUserConfig): Promise<ICheckUptime
           status.connected = true;
           connection.end();
         })
-        // TODO: [urgent, not urgent] implement error message
         .on("error", (error) => {
           status.error = `${error.level}`;
-          resolve(status)
+          resolve(status);
         })
         .on("end", () => {
-          resolve(status)
+          resolve(status);
         })
-        .connect(config)
-    }
-  )
+        .connect(config);
+    },
+  );
 };
