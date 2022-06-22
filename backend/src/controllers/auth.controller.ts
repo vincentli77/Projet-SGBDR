@@ -50,11 +50,13 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
 export const refreshToken = (req: Request, res: Response) => {
 	const authHeader = req.headers["authorization"];
 	const refreshToken = authHeader && authHeader.split(" ")[1];
+
 	jwt.verify(refreshToken, process.env.TOKEN_SECRET_KEY, (err: any) => {
 		if (err) {
 			res.status(403).send("Invalid auth credentials.").redirect("/login");
 			return;
 		}
+
 		const accessToken = generateRefreshToken(req.body.email);
 		res.status(200).send({ accessToken: accessToken });
 	});
