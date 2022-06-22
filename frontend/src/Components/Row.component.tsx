@@ -10,10 +10,12 @@ interface Props {
 
 export const Row = (props: Props): JSX.Element => {
 	return (
-		<TableRow>
-			<TableCell>{props.studentName ?? "Non renseigné"}</TableCell>
-			<TableCell align="right">{props.email ?? "Non renseigné"}</TableCell>
-			<TableCell align="right">{props.score ?? "Non renseigné"}</TableCell>
+		<TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+			<TableCell align="left">{props.studentName ?? "Non renseigné"}</TableCell>
+			<TableCell align="left">{props.email ?? "Non renseigné"}</TableCell>
+			<TableCell align="left" className="score">
+				{props.score ?? "Non renseigné"}
+			</TableCell>
 		</TableRow>
 	);
 };

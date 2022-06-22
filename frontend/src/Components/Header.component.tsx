@@ -1,12 +1,18 @@
-import { TableCell, TableHead } from "@mui/material";
+import { TableCell, TableRow } from "@mui/material";
 import React from "react";
 
 export const Header = (): JSX.Element => {
 	return (
-		<TableHead>
-			<TableCell>Students</TableCell>
-			<TableCell align="right">Email</TableCell>
-			<TableCell align="right">Score</TableCell>
-		</TableHead>
+		<TableRow>
+			<TableCell align="left" className="pr-header">
+				Students
+			</TableCell>
+			<TableCell align="left" className="pr-header">
+				Email
+			</TableCell>
+			<TableCell align="left" className="pr-header">
+				Score
+			</TableCell>
+		</TableRow>
 	);
 };
