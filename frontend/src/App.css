@@ -19,7 +19,7 @@
 
 /* ------------- Table ------------ */
 .MuiTableRow-root > * {
-	padding: 10px;
+	padding: 10px !important;
 }
 
 .MuiTableRow-root.MuiTableRow-head > * {
