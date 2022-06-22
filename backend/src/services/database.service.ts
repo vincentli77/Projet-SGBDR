@@ -22,3 +22,17 @@ const Connect = async (): Promise<mysql.Connection> =>
 			resolve(connection);
 		});
 	});
+
+const Query = async (connection: mysql.Connection, query: string): Promise<any> =>
+	new Promise((resolve, reject) => {
+		connection.query(query, connection, (error, result) => {
+			if (error) {
+				reject(error);
+				return;
+			}
+
+			resolve(result);
+		});
+	});
+
+export { Connect, Query };
