@@ -1,3 +1,4 @@
+/* ------------ Main ----------- */
 .App {
 	background: linear-gradient(106.37deg, #ffe1bc 29.63%, #ffcfd1 51.55%, #f3c6f1 90.65%);
 	height: 100vh;
@@ -14,4 +15,27 @@
 	background-color: var(--glass);
 	overflow: hidden;
 	grid-template-columns: 11rem auto 20rem;
+}
+
+/* ------------- Table ------------ */
+.MuiTableRow-root > * {
+	padding: 10px;
+}
+
+.MuiTableRow-root.MuiTableRow-head > * {
+	font-weight: bold !important;
+}
+
+.Table td,
+th {
+	border: none !important;
+}
+
+.Table:first-child {
+	border-radius: 0.7rem !important;
+}
+
+.score {
+	padding: 8px;
+	border-radius: 9px;
 }
