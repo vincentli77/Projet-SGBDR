@@ -12,3 +12,7 @@ export interface User {
 	role: Role;
 	createdAt: string;
 }
+
+export interface UserScore extends User {
+	score: number;
+}
