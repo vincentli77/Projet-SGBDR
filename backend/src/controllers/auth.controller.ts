@@ -34,7 +34,7 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
 		return;
 	}
 
-	jwt.verify(token, process.env.SECRET_KEY, (err: any) => {
+	jwt.verify(token, process.env.TOKEN_SECRET_KEY, (err: any) => {
 		if (err) {
 			res.status(403).send("Invalid auth credentials.");
 			return;
