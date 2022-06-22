@@ -1,4 +1,4 @@
 import { sshConnection } from "./ssh.controller";
-import { mailAuth, refreshToken, authenticate } from "../controllers/auth.controller";
+import { mailProvider, refreshToken, login } from "../controllers/auth.controller";
 
-export { mailAuth, refreshToken, authenticate, sshConnection };
+export { mailProvider, refreshToken, login, sshConnection };
