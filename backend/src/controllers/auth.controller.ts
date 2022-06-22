@@ -3,11 +3,9 @@ import { NextFunction, Request, Response } from "express";
 import { transport } from "../services/mail.service";
 import { generateAccessToken,generateRefreshToken } from "../services/auth/jwt.service";
 import { mailOptions } from "../config/mail.config";
-import { MailAuth } from "../interfaces/user.interface";
+import { MailProvider  } from "../interfaces/user.interface";
 
-
-
-export const mailAuth = async (req: Request<{}, {}, MailAuth>, res: Response): Promise<void> => {
+export const mailProvider  = async (req: Request<{}, {}, MailProvider >, res: Response): Promise<void> => {
 	const body = req.body;
 	const accessToken = generateAccessToken(body.email);
 
@@ -27,17 +25,14 @@ export const mailAuth = async (req: Request<{}, {}, MailAuth>, res: Response): P
 	});
 };
 
-export const refreshToken = (req: Request, res: Response, next: NextFunction) => {
+export const login = (req: Request, res: Response, next: NextFunction) => {
 	const authHeader = req.headers["authorization"];
-	// const token = authHeader && authHeader.split(" ")[1];
-	const token = authHeader
-
-
+	const token = authHeader && authHeader.split(" ")[1];
+	
 	if (!token) {
 		res.status(403).send("Can't verify user.").redirect("/");
 		return;
 	}
-
 	
 	 jwt.verify(token, process.env.SECRET_KEY, (err: any) => {
 		
@@ -47,31 +42,22 @@ export const refreshToken = (req: Request, res: Response, next: NextFunction) =>
 		}
 
 		const data = jwt.decode(token) as JwtPayload;
-	
 		const refreshToken = generateRefreshToken(data.email);
-		res.status(200).send(" Verify user."+ refreshToken).redirect("/dashboard");
-		return;
-		next();
+
+		res.status(200).send({accessToken: token, refreshToken}).redirect("/login");
 	});
 	
 };
 
-export const authenticate = (req: Request, res: Response, next: NextFunction) => {
-	if (!req.body.token) {
-		res.status(403).send("Can't verify user.").redirect("/");
-		return;
-	}
-
-	 jwt.verify(req.body.token, process.env.SECRET_KEY, (err: any) => {
-		
-	if (err) {
-			res.status(403).send("Invalid auth credentials.");
+export const refreshToken = (req: Request, res: Response) => {
+	const authHeader = req.headers["authorization"];
+	const refreshToken = authHeader && authHeader.split(" ")[1];
+		jwt.verify(refreshToken, process.env.SECRET_KEY, (err: any) => {
+		if (err) {
+			res.status(403).send("Invalid auth credentials.").redirect("/login");
 			return;
 		}
-		
-		res.status(200).send(" Verify user.");
-		return;
-		next();
+		const accessToken = generateRefreshToken(req.body.email);
+		res.status(200).send({accessToken: accessToken})
 	});
-	
 };
