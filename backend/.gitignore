@@ -1,6 +1,7 @@
 /node_modules
 /dist
 id_rsa
+.env
 
 # MacOs
 .DS_Store

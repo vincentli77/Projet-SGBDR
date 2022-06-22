@@ -1,14 +1,14 @@
 export interface IUserConfig {
-  host: string;
-  port: number;
-  username: string;
+	host: string;
+	port: number;
+	username: string;
 }
 
 export interface IConfig extends IUserConfig {
-  privateKey: Buffer;
+	privateKey: Buffer;
 }
 
 export interface ICheckUptime {
-  connected: boolean;
-  error?: string;
+	connected: boolean;
+	error?: string;
 }
