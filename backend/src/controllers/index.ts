@@ -1,4 +1,4 @@
 import { sshConnection } from "./ssh.controller";
-import { mailProvider, refreshToken, accessToken } from "../controllers/auth.controller";
-
-export { mailProvider, refreshToken, accessToken, sshConnection };
+import { mailProvider, refreshToken, login } from "../controllers/auth.controller";
+import { findAllUsers, createUsers, findAllUsersByPromo } from "./query.controller";
+export { mailProvider, refreshToken, login, sshConnection, findAllUsers, createUsers, findAllUsersByPromo };
