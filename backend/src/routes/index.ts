@@ -9,7 +9,7 @@ index.post("/refreshToken", controller.refreshToken);
 index.get("/accessToken", controller.accessToken);
 index.get("/login", controller.login);
 index.get("/findAllUsers", controller.findAllUsers);
-index.get("/createUsers", controller.createUsers);
+index.post("/createUsers", controller.createUsers);
 index.get("/findAllUsersByPromo", controller.findAllUsersByPromo);
 
 index.get("/");
