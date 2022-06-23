@@ -19,13 +19,8 @@ export const findAllUsers = async (req: Request, res: Response): Promise<void> =
 
 export const createUsers = async (req: Request, res: Response): Promise<void> => {
 	const db = await Connect();
-	const data = {
-		email: "ee@€zaeaz",
-		first_name: "li",
-		last_name: "vincent",
-		promotion: "P2022",
-		role: "student",
-	};
+	const data = req.body;
+
 	try {
 		db.query(
 			`INSERT INTO backendproject.users (email, first_name, last_name,role,promo_id) 
