@@ -34,7 +34,7 @@ docker run \
 - -p: Publish a container's port(s) to the host
 - --restart=always: Restart policy to apply when a container exits
 - -e: Enviorment
--   MYSQL_ROOT_PASSWORD=root // Set the password for the root user of mariadb
+-   MYSQL_ROOT_PASSWORD=xxxx // Set the password for the root user of mariadb
 - mariadb: Image name
 </details>
 
