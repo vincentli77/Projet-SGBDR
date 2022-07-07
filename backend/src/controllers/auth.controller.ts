@@ -25,29 +25,31 @@ export const mailProvider = async (req: Request<{}, {}, MailProvider>, res: Resp
 	});
 };
 
-export const login = (req: Request, res: Response, next: NextFunction) => {
+// Fonction appeler apres cliqué sur le lien pour générer  le refresh token
+export const refreshToken = (req: Request, res: Response, next: NextFunction) => {
 	const authHeader = req.headers["authorization"];
-	const token = authHeader && authHeader.split(" ")[1];
+	const accessToken = authHeader && authHeader.split(" ")[1];
 
-	if (!token) {
+	if (!accessToken) {
 		res.status(403).send("Can't verify user.").redirect("/");
 		return;
 	}
 
-	jwt.verify(token, process.env.TOKEN_SECRET_KEY, (err: any) => {
+	jwt.verify(accessToken, process.env.TOKEN_SECRET_KEY, (err: any) => {
 		if (err) {
 			res.status(403).send("Invalid auth credentials.");
 			return;
 		}
 
-		const data = jwt.decode(token) as JwtPayload;
+		const data = jwt.decode(accessToken) as JwtPayload;
 		const refreshToken = generateRefreshToken(data.email);
 
-		res.status(200).send({ accessToken: token, refreshToken }).redirect("/login");
+		res.status(200).send({ accessToken: accessToken, refreshToken }).redirect("/login");
 	});
 };
 
-export const refreshToken = (req: Request, res: Response) => {
+// generer un nouvel acces token à partir d'un refresh token valide
+export const accessToken = (req: Request, res: Response) => {
 	const authHeader = req.headers["authorization"];
 	const refreshToken = authHeader && authHeader.split(" ")[1];
 
@@ -57,7 +59,7 @@ export const refreshToken = (req: Request, res: Response) => {
 			return;
 		}
 
-		const accessToken = generateRefreshToken(req.body.email);
+		const accessToken = generateAccessToken(req.body.email);
 		res.status(200).send({ accessToken: accessToken });
 	});
 };
