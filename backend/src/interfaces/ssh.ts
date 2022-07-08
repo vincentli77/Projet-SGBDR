@@ -12,3 +12,13 @@ export interface ICheckUptime {
 	connected: boolean;
 	error?: string;
 }
+
+export interface ICheckChallenge {
+	pass: boolean;
+	error?: string;
+}
+
+export interface IParams {
+	stdin: string;
+	stdout: string;
+}
