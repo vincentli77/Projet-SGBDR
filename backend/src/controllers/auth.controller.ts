@@ -25,7 +25,15 @@ export const mailProvider = async (req: Request<{}, {}, MailProvider>, res: Resp
 	});
 };
 
-// Fonction appeler apres cliqué sur le lien pour générer  le refresh token
+/**
+ * It verifies the access token, generates a new refresh token, and sends both tokens back to the
+ * client
+ * @param {Request} req - Request - The request object.
+ * @param {Response} res - Response - the response object that will be sent back to the client
+ * @param {NextFunction} next - NextFunction - This is a function that will be called when the
+ * middleware is done.
+ * @returns The access token and refresh token are being returned.
+ */
 export const refreshToken = (req: Request, res: Response, next: NextFunction) => {
 	const authHeader = req.headers["authorization"];
 	const accessToken = authHeader && authHeader.split(" ")[1];
@@ -48,7 +56,12 @@ export const refreshToken = (req: Request, res: Response, next: NextFunction) =>
 	});
 };
 
-// generer un nouvel acces token à partir d'un refresh token valide
+/**
+ * It verifies the refresh token, and if it's valid, it generates a new access token and sends it back
+ * to the client
+ * @param {Request} req - Request - The request object.
+ * @param {Response} res - Response - The response object that will be sent back to the client.
+ */
 export const accessToken = (req: Request, res: Response) => {
 	const authHeader = req.headers["authorization"];
 	const refreshToken = authHeader && authHeader.split(" ")[1];
