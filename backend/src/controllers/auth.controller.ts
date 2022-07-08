@@ -44,7 +44,7 @@ export const refreshToken = (req: Request, res: Response, next: NextFunction) =>
 		const data = jwt.decode(accessToken) as JwtPayload;
 		const refreshToken = generateRefreshToken(data.email);
 
-		res.status(200).send({ accessToken: accessToken, refreshToken }).redirect("/login");
+		res.status(200).send({ accessToken, refreshToken }).redirect("/login");
 	});
 };
 
