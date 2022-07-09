@@ -8,7 +8,7 @@ export interface IConfig extends SshUserConfig {
 	privateKey: Buffer;
 }
 
-export interface ICheckUptime {
+export interface Uptime {
 	connected: boolean;
 	error?: string;
 }
