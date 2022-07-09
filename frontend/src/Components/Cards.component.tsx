@@ -1,15 +1,15 @@
 import React from "react";
 import { Card } from "./Card.component";
-import { AverageScore } from "../interfaces/result.interface";
+import { Promo } from "../interfaces/result.interface";
 
 interface Props {
-	infos: AverageScore[];
+	promos: Promo[];
 }
 
 export const Cards = (props: Props): JSX.Element => {
 	return (
 		<div className="Cards">
-			<div className="parentContainer">{props.infos.length > 0 && props.infos.map((info) => <Card key={info.promoId} promoName={info.promoName} createdAt={info.createdAt} colorBackground={info.colorBackground} colorBoxShadow={info.colorBoxShadow} averageScore={info.averageScore} />)}</div>
+			<div className="parentContainer">{props.promos.length > 0 && props.promos.map((promo) => <Card key={promo.promoId} promoName={promo.promoName} createdAt={promo.createdAt} type={"blue"} averageScore={promo.averageScore} />)}</div>
 		</div>
 	);
 };

@@ -7,9 +7,7 @@ export interface Result {
 	promoId: string;
 }
 
-export interface AverageScore extends Result {
+export interface Promo extends Result {
 	averageScore: number;
 	promoName: string;
-	colorBackground: string;
-	colorBoxShadow: string;
 }
