@@ -1,7 +1,6 @@
 import { sshUserConfig } from "../config/ssh.config";
 import { Client } from "ssh2";
 import { SshUserConfig, Uptime } from "../interfaces/ssh";
-import { testSequencer } from "../helpers/tests.sequencer";
 
 /** -- Used to verify the connection with the remote server
  * It connects to a remote server via SSH, and returns a status object with a boolean value indicating

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { checkUptime } from "../services/ssh.service";
+import { uptimeService } from "../services/uptime.service";
 
 export const sshConnection = async (req: Request, res: Response): Promise<void> => {
 	const { host, port, username } = req?.body ?? {};
@@ -11,7 +11,7 @@ export const sshConnection = async (req: Request, res: Response): Promise<void> 
 		return;
 	}
 
-	const status = await checkUptime({ host, port, username });
+	const status = await uptimeService({ host, port, username });
 
 	if (status.error) {
 		res.status(500).send(`Error : Wrong ssh credentials -> ${status.error}`);
