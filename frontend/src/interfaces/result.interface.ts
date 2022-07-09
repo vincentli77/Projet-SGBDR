@@ -6,3 +6,8 @@ export interface Result {
 	createdAt: string;
 	promoId: string;
 }
+
+export interface Promo extends Result {
+	averageScore: number;
+	promoName: string;
+}
