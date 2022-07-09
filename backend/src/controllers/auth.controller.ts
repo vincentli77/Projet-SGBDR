@@ -5,7 +5,10 @@ import { generateAccessToken, generateRefreshToken } from "../services/auth/jwt.
 import { mailOptions } from "../config/mail.config";
 import { MailProvider } from "../interfaces/user.interface";
 
-export const mailProvider = async (req: Request<{}, {}, MailProvider>, res: Response): Promise<void> => {
+export const mailProvider = async (
+	req: Request<Record<string, unknown>, Record<string, unknown>, MailProvider>,
+	res: Response,
+): Promise<void> => {
 	const body = req.body;
 	const accessToken = generateAccessToken(body.email);
 

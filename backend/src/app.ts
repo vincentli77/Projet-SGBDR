@@ -1,10 +1,10 @@
 import cors from "cors";
 import express from "express";
 import logger from "morgan";
-
+import * as dotenv from "dotenv";
 import { errorHandler, errorNotFoundHandler } from "./middlewares/errorHandler";
 
-require("dotenv").config();
+dotenv.config();
 
 // Routes
 import { index } from "./routes/index";
