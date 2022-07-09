@@ -6,21 +6,14 @@ import { BsPeople } from "react-icons/bs";
 
 interface Props {
 	promoName: string;
-	colorBackground: string;
-	colorBoxShadow: string;
 	averageScore: number;
 	createdAt: string;
+	type: "blue" | "purple" | "pink" | "yellow";
 }
 
 export const Card = (props: Props): JSX.Element => {
 	return (
-		<motion.div
-			className="CompactCard"
-			style={{
-				background: props.colorBackground,
-				boxShadow: props.colorBoxShadow,
-			}}
-		>
+		<motion.div className={`CompactCard ${props.type}`}>
 			<div className="radialBar">
 				<CircularProgressbar value={props.averageScore} text={`${props.averageScore}%`} />
 				<span>{props.promoName}</span>

@@ -58,6 +58,26 @@ th {
 	width: 100%;
 }
 /* ------------ Card -------------- */
+.blue {
+	background: radial-gradient(circle, rgb(238, 174, 202) 0%, rgb(148, 187, 233) 100%);
+	box-shadow: rgb(238 174 202) 0px 10px 20px 0px;
+}
+
+.purple {
+	background: linear-gradient(rgb(187, 103, 255) 0%, rgb(196, 132, 243) 100%);
+	box-shadow: rgb(224 198 245) 0px 10px 20px 0px;
+}
+
+.pink {
+	background: linear-gradient(rgb(187, 103, 255) 0%, rgb(252, 146, 157) 100%);
+	box-shadow: rgb(253 192 199) 0px 10px 20px 0px;
+}
+
+.yellow {
+	background: linear-gradient(rgb(248, 212, 154) -146.42%, rgb(255, 202, 113) -46.42%);
+	box-shadow: rgb(249 213 155) 0px 10px 20px 0px;
+}
+
 .CompactCard {
 	display: flex;
 	flex: 1;
