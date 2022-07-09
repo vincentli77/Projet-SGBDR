@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-//pas le bon chemin ? pourtant si ..
 import Logo from "../imgs/logo.png";
-
 import { MdOutlineDashboard } from "react-icons/md";
 import { FaSignOutAlt } from "react-icons/fa";
-
 import { Challenge } from "../interfaces/challenge.interface";
 
 interface Props {
@@ -17,7 +14,7 @@ export const SideBar = (props: Props): JSX.Element => {
 	return (
 		<div className="sidebar">
 			<div className="logo">
-				<img className="logo2" src={Logo} alt="" />
+				<img className="logo2" src={Logo} alt="logo" />
 				<span>
 					Ch<span>a</span>llenges
 				</span>
