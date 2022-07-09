@@ -7,6 +7,7 @@ interface Props {
 }
 
 export const Cards = (props: Props): JSX.Element => {
+	if (!props.promos) return <div>Aucune promotions disponible</div>;
 	return (
 		<div className="Cards">
 			<div className="parentContainer">{props.promos.length > 0 && props.promos.map((promo) => <Card key={promo.promoId} promoName={promo.promoName} createdAt={promo.createdAt} type={"blue"} averageScore={promo.averageScore} />)}</div>
