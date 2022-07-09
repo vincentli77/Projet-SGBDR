@@ -12,7 +12,7 @@ export const transportConfig = {
 export const mailOptions = (email: string, token: string) => {
 	return {
 		from: process.env.SENDERMAIL,
-		html: createEmailTemplate(email, new URL(`http://localhost:3000/connected?token=${token}`)),
+		html: createEmailTemplate(email, new URL(`http://localhost:3000?token=${token}`)),
 		subject: "Your Magic Link",
 		to: email,
 	};
