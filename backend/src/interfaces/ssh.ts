@@ -1,10 +1,10 @@
-export interface IUserConfig {
+export interface SshUserConfig {
 	host: string;
 	port: number;
 	username: string;
 }
 
-export interface IConfig extends IUserConfig {
+export interface IConfig extends SshUserConfig {
 	privateKey: Buffer;
 }
 
