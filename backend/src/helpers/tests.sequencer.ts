@@ -10,12 +10,14 @@ interface StateMachineContext {
 	ssh: SshUserConfig;
 	score: number;
 	isConnected: boolean;
+	errorMessage: string | undefined;
 }
 
 export const stateMachineContext: StateMachineContext = {
 	ssh: { port: null, host: null, username: null } as SshUserConfig,
 	score: 0,
 	isConnected: false,
+	errorMessage: undefined,
 };
 
 export const sequencer = createMachine({
@@ -37,7 +39,10 @@ export const sequencer = createMachine({
 						score: updateScore(),
 					}),
 				},
-				onError: { target: "termination" },
+				onError: {
+					target: "termination",
+					actions: assign({ errorMessage: (context, event) => event.data }),
+				},
 			},
 		},
 
@@ -49,7 +54,10 @@ export const sequencer = createMachine({
 			invoke: {
 				id: "exercice01",
 				src: async (context) => await exercice01(context.ssh),
-				onError: { target: "exercice01" },
+				onError: {
+					target: "exercice01",
+					actions: assign({ errorMessage: (context, event) => event.data }),
+				},
 			},
 		},
 
@@ -61,7 +69,10 @@ export const sequencer = createMachine({
 			invoke: {
 				id: "exercice02",
 				src: async (context) => await exercice02(context.ssh),
-				onError: { target: "exercice02" },
+				onError: {
+					target: "exercice02",
+					actions: assign({ errorMessage: (context, event) => event.data }),
+				},
 			},
 		},
 
@@ -73,7 +84,10 @@ export const sequencer = createMachine({
 			invoke: {
 				id: "exercice03",
 				src: async (context) => await exercice03(context.ssh),
-				onError: { target: "exercice03" },
+				onError: {
+					target: "exercice03",
+					actions: assign({ errorMessage: (context, event) => event.data }),
+				},
 			},
 		},
 
@@ -85,7 +99,10 @@ export const sequencer = createMachine({
 			invoke: {
 				id: "exercice04",
 				src: async (context) => await exercice04(context.ssh),
-				onError: { target: "exercice04" },
+				onError: {
+					target: "exercice04",
+					actions: assign({ errorMessage: (context, event) => event.data }),
+				},
 			},
 		},
 
@@ -97,7 +114,10 @@ export const sequencer = createMachine({
 			invoke: {
 				id: "exercice05",
 				src: async (context) => await exercice05(context.ssh),
-				onError: { target: "exercice05" },
+				onError: {
+					target: "exercice05",
+					actions: assign({ errorMessage: (context, event) => event.data }),
+				},
 			},
 		},
 		termination: { type: "final" },
