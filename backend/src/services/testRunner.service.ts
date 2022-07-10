@@ -11,15 +11,20 @@ import { Client } from "ssh2";
  * resolves to an EvaluationTestResult.
  */
 export const testRunnerService = async ({
-	connection,
+	userConfig,
 	stdin,
 	stdout,
 }: EvaluationTestParams): Promise<EvaluationTestResult> => {
 	const _connection = connection ?? new Client();
 	const status: EvaluationTestResult = { isSuccess: false };
 
+	const config = sshUserConfig(userConfig);
+
 	if (!stdin || !stdout) return status;
 
+	return await new Promise<EvaluationTestResult>((resolve, reject) => {
+		_connection
+			.on("ready", () => {
 	_connection.exec(stdin, (error, channel) => {
 		if (error) status.error = error.message;
 
@@ -32,5 +37,9 @@ export const testRunnerService = async ({
 			.stderr.on("error", (error) => (status.error = error.message));
 	});
 
-	return status;
+					_connection.end();
+				});
+			})
+			.connect(config);
+	});
 };

@@ -1,23 +1,29 @@
+import { SshUserConfig } from "../../interfaces/ssh";
 import { verifyIfIpIsValidOnRemoteSession } from "../index";
 
-export const exercice04 = async (): Promise<boolean> => {
+export const exercice04 = async (userConfig: SshUserConfig): Promise<boolean> => {
 	const test01 = await verifyIfIpIsValidOnRemoteSession({
+		userConfig,
 		stdin: "bash checkip.sh 0.0.0.0",
 		stdout: "true\n",
 	});
 	const test02 = await verifyIfIpIsValidOnRemoteSession({
+		userConfig,
 		stdin: "bash checkip.sh 255.255.255.255",
 		stdout: "true\n",
 	});
 	const test03 = await verifyIfIpIsValidOnRemoteSession({
+		userConfig,
 		stdin: "bash checkip.sh 256.256.256.256",
 		stdout: "false\n",
 	});
 	const test04 = await verifyIfIpIsValidOnRemoteSession({
+		userConfig,
 		stdin: "bash checkip.sh 1.2.4",
 		stdout: "false\n",
 	});
 	const test05 = await verifyIfIpIsValidOnRemoteSession({
+		userConfig,
 		stdin: "bash checkip.sh 0.0.0.0.0",
 		stdout: "false\n",
 	});

@@ -1,17 +1,21 @@
+import { SshUserConfig } from "../../interfaces/ssh";
 import { convertInMsOnRemoteSession } from "../index";
 
-export const exercice03 = async (): Promise<boolean> => {
+export const exercice03 = async (userConfig: SshUserConfig): Promise<boolean> => {
 	const test01 = await convertInMsOnRemoteSession({
+		userConfig,
 		stdin: "bash clock.sh 24 60 60",
 		stdout: "90060000\n",
 	});
 
 	const test02 = await convertInMsOnRemoteSession({
+		userConfig,
 		stdin: "bash clock.sh 1 1 156789789",
 		stdout: "156793449000\n",
 	});
 
 	const test03 = await convertInMsOnRemoteSession({
+		userConfig,
 		stdin: "bash clock.sh 514 1 2",
 		stdout: "1850462000\n",
 	});

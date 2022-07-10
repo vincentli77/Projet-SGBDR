@@ -2,41 +2,41 @@ import { testRunnerService } from "../services/testRunner.service";
 import { EvaluationTestParams, EvaluationTestResult } from "../interfaces/evaluation.interface";
 
 export const verifyIfFileExistOnRemoteSession = ({
-	connection,
+	userConfig,
 	stdin,
 	stdout,
 }: EvaluationTestParams): Promise<EvaluationTestResult> => {
-	return testRunnerService({ connection, stdin, stdout });
+	return testRunnerService({ userConfig, stdin, stdout });
 };
 
 export const countJsFileOnRemoteSession = ({
-	connection,
+	userConfig,
 	stdin,
 	stdout,
 }: EvaluationTestParams): Promise<EvaluationTestResult> => {
-	return testRunnerService({ connection, stdin, stdout });
+	return testRunnerService({ userConfig, stdin, stdout });
 };
 
 export const convertInMsOnRemoteSession = ({
-	connection,
+	userConfig,
 	stdin,
 	stdout,
 }: EvaluationTestParams): Promise<EvaluationTestResult> => {
-	return testRunnerService({ connection, stdin, stdout });
+	return testRunnerService({ userConfig, stdin, stdout });
 };
 
 export const verifyIfIpIsValidOnRemoteSession = ({
-	connection,
+	userConfig,
 	stdin,
 	stdout,
 }: EvaluationTestParams): Promise<EvaluationTestResult> => {
-	return testRunnerService({ connection, stdin, stdout });
+	return testRunnerService({ userConfig, stdin, stdout });
 };
 
 export const findSmallestNumberOnRemoteSession = ({
-	connection,
+	userConfig,
 	stdin,
 	stdout,
 }: EvaluationTestParams): Promise<EvaluationTestResult> => {
-	return testRunnerService({ connection, stdin, stdout });
+	return testRunnerService({ userConfig, stdin, stdout });
 };

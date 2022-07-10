@@ -1,7 +1,7 @@
-import { Client } from "ssh2";
+import { SshUserConfig } from "./ssh";
 
 export interface EvaluationTestParams {
-	connection?: Client;
+	userConfig?: SshUserConfig;
 	stdin: string;
 	stdout: string;
 }

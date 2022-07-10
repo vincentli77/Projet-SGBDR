@@ -42,8 +42,7 @@ export const sequencer = createMachine({
 		exercice01_invoke: {
 			invoke: {
 				id: "exercice01",
-				src: async () => await exercice01(),
-				onDone: { target: "exercice02", actions: assign({ score: updateScore() }) },
+				src: async (context) => await exercice01(context.ssh),
 				onError: { target: "exercice01" },
 			},
 		},
@@ -55,8 +54,7 @@ export const sequencer = createMachine({
 		exercice02_invoke: {
 			invoke: {
 				id: "exercice02",
-				src: async () => await exercice02(),
-				onDone: { target: "exercice03", actions: assign({ score: updateScore() }) },
+				src: async (context) => await exercice02(context.ssh),
 				onError: { target: "exercice02" },
 			},
 		},
@@ -68,8 +66,7 @@ export const sequencer = createMachine({
 		exercice03_invoke: {
 			invoke: {
 				id: "exercice03",
-				src: async () => await exercice03(),
-				onDone: { target: "exercice04", actions: assign({ score: updateScore() }) },
+				src: async (context) => await exercice03(context.ssh),
 				onError: { target: "exercice03" },
 			},
 		},
@@ -81,8 +78,7 @@ export const sequencer = createMachine({
 		exercice04_invoke: {
 			invoke: {
 				id: "exercice04",
-				src: async () => await exercice04(),
-				onDone: { target: "exercice05", actions: assign({ score: updateScore() }) },
+				src: async (context) => await exercice04(context.ssh),
 				onError: { target: "exercice04" },
 			},
 		},
@@ -94,8 +90,7 @@ export const sequencer = createMachine({
 		exercice05_invoke: {
 			invoke: {
 				id: "exercice05",
-				src: async () => await exercice05(),
-				onDone: { target: "termination", actions: assign({ score: updateScore() }) },
+				src: async (context) => await exercice05(context.ssh),
 				onError: { target: "exercice05" },
 			},
 		},
