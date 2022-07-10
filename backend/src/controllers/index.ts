@@ -1,4 +1,4 @@
-import { sshConnection } from "./ssh.controller";
+import { evaluationFlow } from "./ssh.controller";
 import { mailProvider, refreshToken, accessToken } from "../controllers/auth.controller";
 import {
 	getUsers,
@@ -16,7 +16,7 @@ export {
 	mailProvider,
 	refreshToken,
 	accessToken,
-	sshConnection,
+	evaluationFlow,
 	getUsers,
 	createUser,
 	getUsersByPromotionName as getUsersPromo,

@@ -3,7 +3,7 @@ import * as controller from "../controllers/index";
 
 export const index = Router();
 
-index.post("/ssh", controller.sshConnection);
+index.post("/evaluationFlow", controller.evaluationFlow);
 
 //auth
 index.post("/mailProvider", controller.mailProvider);

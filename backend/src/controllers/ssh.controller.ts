@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { uptimeService } from "../services/uptime.service";
+import { sequencerService } from "../services/sequencer.service";
 
-export const sshConnection = async (req: Request, res: Response): Promise<void> => {
+export const evaluationFlow = async (req: Request, res: Response): Promise<void> => {
 	const { host, port, username } = req?.body ?? {};
 
 	if (!host || !port || !username) {
