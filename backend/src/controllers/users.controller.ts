@@ -1,14 +1,14 @@
 /* eslint-disable max-len */
 import { Request, Response } from "express";
-import { queryChallenges } from "../config/crud/challenges_crud.config";
-import { queryUsers, queryCreateUser, queryGetUsersPromo, queryUpdateScoreUser } from "../config/crud/user_crud.config ";
+import { queryGetChallenges } from "../config/crud/challenges_crud.config";
+import { queryGetUsers, queryCreateUser, queryGetUsersByPromotionName, queryUpdateScoreUser } from "../config/crud/user_crud.config ";
 
 import { Connect } from "../services/database.service";
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
 	const connection = await Connect();
 	try {
-		connection.query(queryUsers, function (err: any, result: any) {
+		connection.query(queryGetUsers, function (err: any, result: any) {
 			if (err) throw err;
 			res.status(200).send({ result });
 		});
@@ -67,7 +67,7 @@ export const updateScoreUser = async (req: Request, res: Response): Promise<void
 export const challenges = async (req: Request, res: Response): Promise<void> => {
 	const connection = await Connect();
 	try {
-		connection.query(queryChallenges, function (err: any, result: any) {
+		connection.query(queryGetChallenges, function (err: any, result: any) {
 			res.status(200).send({ result });
 		});
 	} catch (err) {

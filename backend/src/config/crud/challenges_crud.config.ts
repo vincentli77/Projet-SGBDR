@@ -1,1 +1,1 @@
-export const queryChallenges = "SELECT * FROM Challenges";
+export const queryGetChallenges = "SELECT * FROM Challenges";
