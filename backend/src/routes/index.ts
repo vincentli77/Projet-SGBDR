@@ -16,11 +16,4 @@ index.get("/usersPromo", controller.getUsersPromo);
 index.get("/challenges", controller.challenges);
 index.put("/updateScoreUser", controller.updateScoreUser);
 
-//crud users
-index.get("/users", controller.getUsers);
-index.post("/user/create", controller.createUser);
-index.get("/usersPromo", controller.getUsersPromo);
-index.get("/challenges", controller.challenges);
-index.put("/updateScoreUser", controller.updateScoreUser);
-
 index.get("/");
