@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { Request, Response } from "express";
 import { getChallenges as getChallengesQuery } from "../crud/challenge";
 import { getPromoName as getPromoNameQuery } from "../crud/promotion";
