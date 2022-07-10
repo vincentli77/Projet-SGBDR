@@ -1,5 +1,4 @@
 export const queryUsers = "SELECT * FROM Users";
-export const queryChallenges = "SELECT * FROM Challenges";
 export const queryCreateUser = `INSERT INTO Users 
 			SET ?, promo_id  = (SELECT id 
 				FROM Promotions 
