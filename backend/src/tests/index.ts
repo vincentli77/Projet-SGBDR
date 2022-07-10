@@ -1,27 +1,42 @@
-import { IParams } from "../interfaces/ssh";
-import { sshService } from "../services/ssh-challenge01.service";
+import { testRunnerService } from "../services/testRunner.service";
+import { EvaluationTestParams, EvaluationTestResult } from "../interfaces/evaluation.interface";
 
-import { Client } from "ssh2";
-import { EvaluationTestResult } from "../interfaces/evaluation.interface";
-
-const connection = new Client();
-
-export const verifyIfFileExistOnRemoteSession = (params: IParams): EvaluationTestResult => {
-	return sshService(connection, "command", "result");
+export const verifyIfFileExistOnRemoteSession = ({
+	connection,
+	stdin,
+	stdout,
+}: EvaluationTestParams): Promise<EvaluationTestResult> => {
+	return testRunnerService({ connection, stdin, stdout });
 };
 
-export const countJsFileOnRemoteSession = (params: IParams): EvaluationTestResult => {
-	return sshService(connection, "command", "result");
+export const countJsFileOnRemoteSession = ({
+	connection,
+	stdin,
+	stdout,
+}: EvaluationTestParams): Promise<EvaluationTestResult> => {
+	return testRunnerService({ connection, stdin, stdout });
 };
 
-export const convertInMsOnRemoteSession = (params: IParams): EvaluationTestResult => {
-	return sshService(connection, "command", "result");
+export const convertInMsOnRemoteSession = ({
+	connection,
+	stdin,
+	stdout,
+}: EvaluationTestParams): Promise<EvaluationTestResult> => {
+	return testRunnerService({ connection, stdin, stdout });
 };
 
-export const verifyIfIpIsValidOnRemoteSession = (params: IParams): EvaluationTestResult => {
-	return sshService(connection, "command", "result");
+export const verifyIfIpIsValidOnRemoteSession = ({
+	connection,
+	stdin,
+	stdout,
+}: EvaluationTestParams): Promise<EvaluationTestResult> => {
+	return testRunnerService({ connection, stdin, stdout });
 };
 
-export const findSmallestNumberOnRemoteSession = (params: IParams): EvaluationTestResult => {
-	return sshService(connection, "command", "result");
+export const findSmallestNumberOnRemoteSession = ({
+	connection,
+	stdin,
+	stdout,
+}: EvaluationTestParams): Promise<EvaluationTestResult> => {
+	return testRunnerService({ connection, stdin, stdout });
 };

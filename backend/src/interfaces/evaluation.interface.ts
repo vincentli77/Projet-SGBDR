@@ -1,7 +1,7 @@
 import { Client } from "ssh2";
 
 export interface EvaluationTestParams {
-	connection: Client;
+	connection?: Client;
 	stdin: string;
 	stdout: string;
 }
