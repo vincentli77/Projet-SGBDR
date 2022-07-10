@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { sequencerService } from "../services/sequencer.service";
 
 export const evaluationFlow = async (req: Request, res: Response): Promise<void> => {
-	const { host, port, username } = req?.body ?? {};
+	const { host, port, username, event } = req?.body ?? {};
 
 	if (!host || !port || !username) {
 		res.status(401).send(
@@ -11,12 +11,7 @@ export const evaluationFlow = async (req: Request, res: Response): Promise<void>
 		return;
 	}
 
-	sequencerService({ host, port, username });
+	const interpreter = sequencerService({ host, port, username });
 
-	if (status.error) {
-		res.status(500).send(`Error : Wrong ssh credentials -> ${status.error}`);
-		return;
-	}
-
-	res.status(200).send(status);
+	// interpreter.send("TEST_DOING");
 };
