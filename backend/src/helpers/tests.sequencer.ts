@@ -34,14 +34,6 @@ export const sequencer = createMachine({
 				onError: { target: "termination" },
 			},
 		},
-		connected: {
-			on: {
-				START: {
-					target: "exercice01",
-					actions: assign({ score: updateScore }),
-				},
-			},
-		},
 
 		/**
 		 *
