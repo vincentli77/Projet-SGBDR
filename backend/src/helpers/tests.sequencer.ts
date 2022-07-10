@@ -5,13 +5,14 @@ import { verifyIfFileExistOnRemoteSession, countJsFileOnRemoteSession, convertIn
 // This function update the database with the new score and return the value to update the context
 const updateScore = () => 1;
 
-const sequencer = createMachine({
+export const stateMachineContext = {
+	ssh: { port: null, host: null, username: null } as SshUserConfig,
+	score: 0,
+	isConnected: false,
+};
 	id: "assessment-tests-sequencer",
 	initial: "disconnected",
-	context: {
-		score: 0,
-		canProceed: false,
-	},
+	context: stateMachineContext,
 	states: {
 		// TODO:[important, not urgent] Replace the empty function by the result of the uptimeService
 		disconnected: {
