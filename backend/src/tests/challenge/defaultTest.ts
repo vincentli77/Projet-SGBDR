@@ -1,9 +1,6 @@
-export interface ICallback {
-	isSuccess: boolean;
-	error?: string;
-}
+import { EvaluationTestResult } from "../../interfaces/evaluation.interface";
 
-export const defaultTest = (callback: ICallback): void => {
+export const defaultTest = (callback: Promise<EvaluationTestResult>): void => {
 	it("Verify if hello.txt file exist on the remote session.", () => {
 		expect(callback).toBe({ isSuccess: true });
 	});

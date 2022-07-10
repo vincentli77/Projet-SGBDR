@@ -1,6 +1,13 @@
+import { Client } from "ssh2";
+
+export interface EvaluationTestParams {
+	connection: Client;
+	stdin: string;
+	stdout: string;
+}
 export interface EvaluationTestResult {
 	isSuccess: boolean;
-	error: string;
+	error?: string;
 }
 
 export interface EvaluationResult {
