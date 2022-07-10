@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { Request, Response } from "express";
 import { queryGetChallenges } from "../config/crud/challenges_crud.config";
-import { queryGetUsers, queryCreateUser, queryGetUsersByPromotionName, queryUpdateScoreUser } from "../config/crud/user_crud.config ";
+import { queryGetUsers, queryCreateUser, queryGetUsersByPromotionName, queryUpdateScoreUser } from "../config/crud/user_crud.config";
 
 import { Connect } from "../services/database.service";
 
