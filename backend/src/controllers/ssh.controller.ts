@@ -11,7 +11,7 @@ export const evaluationFlow = async (req: Request, res: Response): Promise<void>
 		return;
 	}
 
-	const status = await uptimeService({ host, port, username });
+	sequencerService({ host, port, username });
 
 	if (status.error) {
 		res.status(500).send(`Error : Wrong ssh credentials -> ${status.error}`);
