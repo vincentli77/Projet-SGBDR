@@ -4,7 +4,7 @@ import { uptimeService } from "../services/uptime.service";
 import { exercice01, exercice02, exercice03, exercice04, exercice05 } from "../tests/exercices/index";
 
 // This function update the database with the new score and return the value to update the context
-const updateScore = () => 1;
+const updateScore = (context: StateMachineContext) => context.score + 1;
 
 interface StateMachineContext {
 	ssh: SshUserConfig;
@@ -36,7 +36,7 @@ export const sequencer = createMachine({
 					target: "exercice01",
 					actions: assign({
 						isConnected: (context, event: DoneInvokeEvent<{ connected: boolean }>) => event.data.connected,
-						score: updateScore(),
+						score: (context: StateMachineContext) => updateScore(context),
 					}),
 				},
 				onError: {
@@ -54,6 +54,10 @@ export const sequencer = createMachine({
 			invoke: {
 				id: "exercice01",
 				src: async (context) => await exercice01(context.ssh),
+				onDone: {
+					target: "exercice02",
+					actions: assign({ score: (context: StateMachineContext) => updateScore(context) }),
+				},
 				onError: {
 					target: "exercice01",
 					actions: assign({ errorMessage: (context, event) => event.data }),
@@ -69,6 +73,10 @@ export const sequencer = createMachine({
 			invoke: {
 				id: "exercice02",
 				src: async (context) => await exercice02(context.ssh),
+				onDone: {
+					target: "exercice03",
+					actions: assign({ score: (context: StateMachineContext) => updateScore(context) }),
+				},
 				onError: {
 					target: "exercice02",
 					actions: assign({ errorMessage: (context, event) => event.data }),
@@ -84,6 +92,10 @@ export const sequencer = createMachine({
 			invoke: {
 				id: "exercice03",
 				src: async (context) => await exercice03(context.ssh),
+				onDone: {
+					target: "exercice04",
+					actions: assign({ score: (context: StateMachineContext) => updateScore(context) }),
+				},
 				onError: {
 					target: "exercice03",
 					actions: assign({ errorMessage: (context, event) => event.data }),
@@ -99,8 +111,12 @@ export const sequencer = createMachine({
 			invoke: {
 				id: "exercice04",
 				src: async (context) => await exercice04(context.ssh),
+				onDone: {
+					target: "exercice05",
+					actions: assign({ score: (context: StateMachineContext) => updateScore(context) }),
+				},
 				onError: {
-					target: "exercice04",
+					target: "termination",
 					actions: assign({ errorMessage: (context, event) => event.data }),
 				},
 			},
@@ -114,6 +130,10 @@ export const sequencer = createMachine({
 			invoke: {
 				id: "exercice05",
 				src: async (context) => await exercice05(context.ssh),
+				onDone: {
+					target: "termination",
+					actions: assign({ score: (context: StateMachineContext) => updateScore(context) }),
+				},
 				onError: {
 					target: "exercice05",
 					actions: assign({ errorMessage: (context, event) => event.data }),
