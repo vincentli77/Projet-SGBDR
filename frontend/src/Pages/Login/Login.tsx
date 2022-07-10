@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { loginUser } from "../../hook/useLogin";
+import "./Login.scss";
 
 export const Login = (): JSX.Element => {
 	const [email, setEmail] = useState();
@@ -12,15 +13,22 @@ export const Login = (): JSX.Element => {
 	};
 
 	return (
-		<div>
-			<form onSubmit={onSubmit}>
-				<label>
-					<input type="email" onChange={(e) => setEmail} />
-				</label>
-				<div>
-					<button type="submit">Submit</button>
-				</div>
-			</form>
+		<div className="container">
+			<div className="top"></div>
+			<div className="bottom"></div>
+			<div className="center">
+				<div> Login </div>
+				<form onSubmit={onSubmit}>
+					<div className="user-box">
+						<label>
+							<input placeholder="email" type="email" onChange={(e) => setEmail} />
+						</label>
+					</div>
+					<button className="button-submit" type="submit">
+						Submit
+					</button>
+				</form>
+			</div>
 		</div>
 	);
 };
