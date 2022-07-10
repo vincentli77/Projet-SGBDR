@@ -9,8 +9,6 @@ index.post("/ssh", controller.sshConnection);
 index.post("/mailProvider", controller.mailProvider);
 index.post("/refreshToken", controller.refreshToken);
 index.get("/accessToken", controller.accessToken);
-index.get("/login", controller.login);
-
 //crud users
 index.get("/users", controller.getUsers);
 index.post("/user/create", controller.createUser);
