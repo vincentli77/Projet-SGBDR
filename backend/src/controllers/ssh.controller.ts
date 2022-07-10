@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { waitFor } from "xstate/lib/waitFor";
 import { sequencerService } from "../services/sequencer.service";
 
 export const evaluationFlow = async (req: Request, res: Response): Promise<void> => {
@@ -11,7 +12,18 @@ export const evaluationFlow = async (req: Request, res: Response): Promise<void>
 		return;
 	}
 
-	const interpreter = sequencerService({ host, port, username });
+	const sequencer = sequencerService({ host, port, username });
 
-	// interpreter.send("TEST_DOING");
+	try {
+		!!event.state &&
+			event.state.forEach(async (eventState: ReadonlyArray<string>) => {
+				await waitFor(sequencer, (state) => state.matches(eventState), { timeout: 20000 });
+
+				sequencer.send(event.name);
+			});
+	} catch (error) {
+		// Restart the machine
+		sequencer.start();
+		res.status(500).send("Ooups. Server Error. Restarting...");
+	}
 };
