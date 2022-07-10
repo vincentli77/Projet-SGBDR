@@ -10,13 +10,28 @@ export const stateMachineContext = {
 	score: 0,
 	isConnected: false,
 };
+
+export const sequencer = createMachine({
 	id: "assessment-tests-sequencer",
 	initial: "disconnected",
 	context: stateMachineContext,
 	states: {
-		// TODO:[important, not urgent] Replace the empty function by the result of the uptimeService
+		/**
+		 *
+		 */
 		disconnected: {
-			on: { CONNECT: { target: "connected", cond: () => true } },
+			invoke: {
+				id: "uptime",
+				src: async ({ ssh: { host, port, username } }) => await uptimeService({ host, port, username }),
+				onDone: {
+					target: "exercice01",
+					actions: assign({
+						isConnected: (context, event: DoneInvokeEvent<{ connected: boolean }>) => event.data.connected,
+						score: updateScore(),
+					}),
+				},
+				onError: { target: "termination" },
+			},
 		},
 		connected: {
 			on: {
