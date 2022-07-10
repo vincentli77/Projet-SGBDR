@@ -1,5 +1,6 @@
-import { EvaluationTestParams, EvaluationTestResult } from "../interfaces/evaluation.interface";
 import { Client } from "ssh2";
+import { sshUserConfig } from "../config/ssh.config";
+import { EvaluationTestParams, EvaluationTestResult } from "../interfaces/evaluation.interface";
 
 /** -- Used to provide a ssh context to the tests
  * It takes a connection, a string of code to run, and a string of expected output. It then runs the
@@ -15,7 +16,8 @@ export const testRunnerService = async ({
 	stdin,
 	stdout,
 }: EvaluationTestParams): Promise<EvaluationTestResult> => {
-	const _connection = connection ?? new Client();
+	const _connection = new Client();
+
 	const status: EvaluationTestResult = { isSuccess: false };
 
 	const config = sshUserConfig(userConfig);
@@ -25,17 +27,16 @@ export const testRunnerService = async ({
 	return await new Promise<EvaluationTestResult>((resolve, reject) => {
 		_connection
 			.on("ready", () => {
-	_connection.exec(stdin, (error, channel) => {
-		if (error) status.error = error.message;
+				_connection.exec(stdin, (error, channel) => {
+					if (error) reject({ ...status, error: error.message });
 
-		channel.on("close", () => _connection.end());
+					channel.on("close", () => _connection.end());
 
-		channel
-			.on("data", (data: string) => {
-				if (String(data) === stdout) status.isSuccess = true;
-			})
-			.stderr.on("error", (error) => (status.error = error.message));
-	});
+					channel
+						.on("data", (data: string) => {
+							if (String(data) === stdout) resolve({ ...status, isSuccess: true });
+						})
+						.stderr.on("data", (data) => reject({ ...status, error: String(data) }));
 
 					_connection.end();
 				});
