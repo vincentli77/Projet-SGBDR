@@ -1,4 +1,3 @@
-import { Table } from "./Components/Table.component";
 import React from "react";
 import "./App.scss";
 import { Login } from "./Pages/Login/Login";
@@ -13,9 +12,6 @@ function App() {
 		<div className="App">
 			<div className="AppGlass">
 				<SideBar />
-			<p>connected</p>
-			<div className="AppGlass">
-				<Table users={[]} />
 			</div>
 		</div>
 	);
