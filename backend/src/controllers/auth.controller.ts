@@ -20,8 +20,7 @@ export const mailProvider = async (
 
 	transport.sendMail(mailOptions(body.email, accessToken), (error) => {
 		if (error) {
-			console.log(error);
-			return res.status(404).send("Cant'send email");
+			return res.status(404).send({ error,message : "Cant'send email" });
 		}
 
 		res.status(200).send(`Magic link sent. : http://localhost:3000/refresh?token=${accessToken}`);
@@ -46,9 +45,9 @@ export const refreshToken = (req: Request, res: Response, next: NextFunction) =>
 		return;
 	}
 
-	jwt.verify(accessToken, process.env.TOKEN_SECRET_KEY, (err: any) => {
-		if (err) {
-			res.status(403).send("Invalid auth credentials.");
+	jwt.verify(accessToken, process.env.TOKEN_SECRET_KEY, (error: any) => {
+		if (error) {
+			res.status(403).send({error,message:"Invalid auth credentials.}");
 			return;
 		}
 
@@ -69,9 +68,9 @@ export const accessToken = (req: Request, res: Response) => {
 	const authHeader = req.headers["authorization"];
 	const refreshToken = authHeader && authHeader.split(" ")[1];
 
-	jwt.verify(refreshToken, process.env.TOKEN_SECRET_KEY, (err: any) => {
-		if (err) {
-			res.status(403).send("Invalid auth credentials.").redirect("/login");
+	jwt.verify(refreshToken, process.env.TOKEN_SECRET_KEY, (error: any) => {
+		if (error) {
+			res.status(403).send({error,message:"Invalid auth credentials."}).redirect("/login");
 			return;
 		}
 
