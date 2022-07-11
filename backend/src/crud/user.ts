@@ -17,3 +17,18 @@ export const createUser = `INSERT INTO Users
  *
  */
 export const updateUserScore = "UPDATE Results SET score=? WHERE user_id=? AND challenge_id=?";
+
+export const createResult = `INSERT INTO Results 
+			SET user_id  = (SELECT id 
+				FROM Users 
+				WHERE Users.email = ?),
+				challenge_id  = (SELECT id 
+				FROM Challenges 
+				WHERE Challenges.name = ?),
+				promo_id  = (SELECT id 
+				FROM Promotions 
+				WHERE Promotions.name = ?),
+				score = 0`;
+
+
+
