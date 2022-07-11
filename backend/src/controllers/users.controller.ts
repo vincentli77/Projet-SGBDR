@@ -31,8 +31,8 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 
 	const user: Omit<User, "id" | "promoId" | "createdAt"> = {
 		email: req.body.email,
-		firstname: req.body.firstname,
-		lastname: req.body.lastname,
+		first_name: req.body.firstname,
+		last_name: req.body.lastname,
 		role: req.body.role,
 	};
 
