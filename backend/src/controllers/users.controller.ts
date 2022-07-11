@@ -104,7 +104,6 @@ export const createResult = async (req: Request, res: Response): Promise<void> =
 		promotion_name: req.body.promotion_name,
 	};
 
-	console.log(user);
 	
 	try {
 		const createResult = await Query(connection, createResultQuery,[user.email, user.challenge_name, user.promotion_name]);
