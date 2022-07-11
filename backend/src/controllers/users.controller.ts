@@ -1,83 +1,101 @@
 /* eslint-disable max-len */
 import { Request, Response } from "express";
 import { getChallenges } from "../crud/challenge";
+import { Connect } from "../services/database.service";
 import {
 	getUsers as getUsersQuery,
 	createUser as createUserQuery,
 	getUsersByPromotionName as getUsersByPromotionNameQuery,
 	updateUserScore as updateUserScoreQuery,
 } from "../crud/user";
-
-import { Connect } from "../services/database.service";
+import { MysqlError } from "mysql";
+import { User, UserChallengeResult } from "../interfaces/user.interface";
+import { Challenge } from "../interfaces/challenge";
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
 	const connection = await Connect();
+
 	try {
-		connection.query(getUsersQuery, function (err: any, result: any) {
-			if (err) throw err;
-			res.status(200).send({ result });
+		connection.query(getUsersQuery, (error: MysqlError | null, result: User[]) => {
+			if (error) res.status(500).send(error);
+
+			res.status(200).send(result);
 		});
-	} catch (err) {
-		res.status(500).send({ err });
+	} catch (error) {
+		res.status(500).send(error);
 	}
 };
 
 export const createUser = async (req: Request, res: Response): Promise<void> => {
 	const connection = await Connect();
-	const users = {
+
+	const user: Omit<User, "id" | "promoId" | "createdAt"> = {
 		email: req.body.email,
-		first_name: req.body.first_name,
-		last_name: req.body.last_name,
+		firstname: req.body.firstname,
+		lastname: req.body.lastname,
 		role: req.body.role,
 	};
 
 	try {
-		connection.query(createUserQuery, [users, req.body.promotion], function (err: any, result: any) {
-			if (err) throw err;
-			res.status(200).send({ result });
-		});
-	} catch (err) {
-		res.status(500).send({ err });
+		connection.query(
+			createUserQuery,
+			[user, req.body.promotion],
+			function (error: MysqlError | null, result: User) {
+				if (error) res.status(500).send(error);
+
+				res.status(200).send(result);
+			},
+		);
+	} catch (error) {
+		res.status(500).send(error);
 	}
 };
 
-export const getUsersPromo = async (req: Request, res: Response): Promise<void> => {
+export const getUsersByPromotionName = async (req: Request, res: Response): Promise<void> => {
 	const connection = await Connect();
 
 	try {
-		connection.query(updateUserScoreQuery, function (err: any, result: any) {
-			res.status(200).send({ result });
+		connection.query(getUsersByPromotionNameQuery, function (error: MysqlError | null, result: User[]) {
+			if (error) res.status(500).send(error);
+
+			res.status(200).send(result);
 		});
-	} catch (err) {
-		res.status(500).send({ err });
+	} catch (error) {
+		res.status(500).send(error);
 	}
 };
 
-export const updateScoreUser = async (req: Request, res: Response): Promise<void> => {
+export const updateUserScore = async (req: Request, res: Response): Promise<void> => {
 	const connection = await Connect();
-	const user = {
-		user_id: req.body.user_id,
-		challenge_id: req.body.challenge_id,
+
+	const userChallengeResult: Omit<UserChallengeResult, "id" | "promoId" | "createdAt"> = {
+		userId: req.body.user_id,
+		challengeId: req.body.challenge_id,
 		score: req.body.score,
 	};
 
 	try {
 		connection.query(
 			updateUserScoreQuery,
-			[user.score, user.user_id, user.challenge_id],
-			function (err: any, result: any) {
+			[userChallengeResult.score, userChallengeResult.userId, userChallengeResult.challengeId],
+			function (error: MysqlError | null, result: UserChallengeResult) {
+				if (error) res.status(500).send(error);
+
 				res.status(200).send({ result });
 			},
 		);
-	} catch (err) {
-		res.status(500).send({ err });
+	} catch (error) {
+		res.status(500).send(error);
 	}
 };
 export const challenges = async (req: Request, res: Response): Promise<void> => {
 	const connection = await Connect();
+
 	try {
-		connection.query(getChallenges, function (err: any, result: any) {
-			res.status(200).send({ result });
+		connection.query(getChallenges, function (error: MysqlError | null, result: Challenge[]) {
+			if (error) res.status(500).send(error);
+
+			res.status(200).send(result);
 		});
 	} catch (err) {
 		res.status(500).send({ err });
