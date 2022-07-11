@@ -17,7 +17,7 @@ index.post("/user/create", controller.createUser);
 index.post("/result", controller.createResult);
 index.get("/promoName", controller.getPromoName);
 index.get("/usersPromo", controller.getUsersByPromotionName);
-index.get("/challenges", controller.challenges);
+index.get("/challenges", controller.getChallenges);
 index.put("/updateScoreUser", controller.updateUserScore);
 
 index.get("/");
