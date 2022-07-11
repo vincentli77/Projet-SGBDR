@@ -1,3 +1,4 @@
+import { log } from "console";
 import mysql, { ConnectionConfig } from "mysql";
 import config from "../config/database.config";
 
@@ -23,9 +24,11 @@ const Connect = async (): Promise<mysql.Connection> =>
 		});
 	});
 
-const Query = async (connection: mysql.Connection, query: string): Promise<any> =>
+const Query = async (connection: mysql.Connection, query: string, values?: mysql.QueryOptions["values"]): Promise<any> =>
 	new Promise((resolve, reject) => {
-		connection.query(query, connection, (error, result) => {
+			
+		connection.query( query,values , (error, result) => {
+			
 			if (error) {
 				reject(error);
 				return;
