@@ -7,7 +7,7 @@ import { exercice01, exercice02, exercice03, exercice04, exercice05 } from "../t
 // This function update the database with the new score and return the value to update the context
 const updateScore = (context: StateMachineContext) => context.score + 1;
 
-interface StateMachineContext {
+export interface StateMachineContext {
 	ssh: SshUserConfig;
 	score: number;
 	isConnected: boolean;
