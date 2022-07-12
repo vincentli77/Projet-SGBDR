@@ -7,6 +7,6 @@ export interface Result {
 	promoId: string;
 }
 
-export interface Promo extends Result {
-	promoName: string;
+export interface Promo {
+	name: string;
 }

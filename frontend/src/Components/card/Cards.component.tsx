@@ -9,7 +9,7 @@ export const Cards = (props: Props): JSX.Element => {
 	if (!props.promos) return <div>Aucune promotions disponible</div>;
 	return (
 		<div className="Cards">
-			<div className="parentContainer">{props.promos.length > 0 && props.promos.map((promo) => <Card key={promo.promoId} promoName={promo.promoName} createdAt={promo.createdAt} type={"blue"} />)}</div>
+			<div>{props.promos.length > 0 && props.promos.map((promo, i) => <Card key={i} promoName={promo.name} type={"blue"} />)}</div>
 		</div>
 	);
 };

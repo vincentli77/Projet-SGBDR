@@ -3,52 +3,37 @@ import React, { useEffect, useState } from "react";
 import { CardDescription } from "../../../Components/card/CardDescription.component";
 import { SideBar } from "../../../Components/SideBar/SideBar.component";
 import { Table } from "../../../Components/Table.component";
-import { getUser } from "../../../hook/getUsers";
+import { getPromotionName } from "../../../hook/getPromotionName";
+import { getUserByPromotionName } from "../../../hook/getUserByPromotionName";
 import "./Dashboard.scss";
 
 export const Dashboard = (): JSX.Element => {
 	const [users, setUsers] = useState();
-	const promotion = "MT4_2022";
+	const [promotions, setPromotions] = useState<any>([]);
+
+	const data = { promotion: "MT4_2022" };
 
 	useEffect(() => {
-		getUser(promotion).then(function (result) {
-			setUsers(result);
+		getUserByPromotionName(data).then(function (result) {
+			setUsers(result.getUsersByPromotionName);
+		});
+		getPromotionName().then(function (result) {
+			setPromotions(result.promotion);
 		});
 	}, []);
-
-	const promoTest = {
-		id: "1",
-		userId: "12312312",
-		challengeId: "31312",
-		createdAt: "31/01",
-		promoId: "21312312",
-		promoName: "MT_2022",
-		score: 0,
-	};
 
 	return (
 		<div className="container">
 			<SideBar
 				challenges={[
 					{ id: "0", name: "Challenge 1" },
-					{ id: "0", name: "Challenge 2" },
+					{ id: "1", name: "Challenge 2" },
 				]}
 			/>
 
 			<div>
 				<div className="Cards">
-					<div className="parrentContainer">
-						<CardDescription cardType={"promo"} promoList={[promoTest]} />
-					</div>
-					<div className="parrentContainer">
-						<CardDescription cardType={"promo"} promoList={[promoTest]} />
-					</div>
-					<div className="parrentContainer">
-						<CardDescription cardType={"promo"} promoList={[promoTest]} />
-					</div>
-					<div className="parrentContainer">
-						<CardDescription cardType={"promo"} promoList={[promoTest]} />
-					</div>
+					<CardDescription cardType={"promo"} promoList={[promotions]} />
 				</div>
 				<div>
 					<Table users={users} />

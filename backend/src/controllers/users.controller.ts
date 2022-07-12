@@ -51,7 +51,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 
 export const getUsersByPromotionName = async (req: Request, res: Response): Promise<void> => {
 	const connection = await Connect();
-
+	
 	try {
 		const getUsersByPromotionName = await Query(connection, getUsersByPromotionNameQuery, [req.body.promotion]);
 		res.status(200).send({ getUsersByPromotionName, message: "get users by promotion name success" });

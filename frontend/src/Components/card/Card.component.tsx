@@ -20,7 +20,6 @@ export const Card = (props: Props): JSX.Element => {
 			</div>
 			<div className="detail">
 				<BsPeople />
-				<span>créer le: {props.createdAt}</span>
 			</div>
 		</motion.div>
 	);

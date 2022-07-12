@@ -6,6 +6,7 @@ import { Dashboard } from "./Pages/Dashboard/Login/Dashboard";
 
 function App() {
 	const check_token = checkToken();
+
 	if (!check_token) {
 		return <Login />;
 	}
