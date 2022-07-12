@@ -10,6 +10,7 @@ import {
 	getUsersByPromotionName as getUsersByPromotionNameQuery,
 	updateUserScore as updateUserScoreQuery,
 	createResult as createResultQuery,
+	getUserByMail as getUserByMailQuery,
 } from "../crud/user";
 import { User, UserChallengeResult, Result } from "../interfaces/user.interface";
 
@@ -25,6 +26,24 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 		}
 
 		res.status(200).send({ users, message: "get all users success" });
+		connection.end();
+	} catch (error) {
+		res.status(500).send({ error, message: "Connection failed" });
+	}
+};
+
+export const getUserByMail = async (req: Request, res: Response): Promise<void> => {
+	const connection = await Connect();
+
+	try {
+		const users = await Query(connection, getUserByMailQuery, [req.body.email]);
+
+		if (!users) {
+			res.status(404).send("No user found");
+			return;
+		}
+
+		res.status(200).send({ users, message: "get  user info success" });
 		connection.end();
 	} catch (error) {
 		res.status(500).send({ error, message: "Connection failed" });
