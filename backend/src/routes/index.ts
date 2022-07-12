@@ -11,6 +11,8 @@ index.post("/refreshToken", controller.refreshToken);
 index.get("/accessToken", controller.accessToken);
 //crud users
 index.get("/users", controller.getUsers);
+index.post("/user", controller.getUserByMail);
+
 index.post("/user/create", controller.createUser);
 index.post("/result", controller.createResult);
 
