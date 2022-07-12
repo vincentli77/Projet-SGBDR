@@ -7,11 +7,15 @@ export async function loginUser(data) {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify(email),
-	}).then((data) => {
-		if (data.status == 200) {
-			alert("Le mail a été envoyé");
-		} else {
+	})
+		.then((data) => {
+			if (data.status == 200) {
+				alert("Le mail a été envoyé");
+			} else {
+				alert("Un problème est survenue veuillez réessayer");
+			}
+		})
+		.catch((error) => {
 			alert("Un problème est survenue veuillez réessayer");
-		}
-	});
+		});
 }

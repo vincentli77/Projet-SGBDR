@@ -23,6 +23,7 @@ export interface UserChallengeResult {
 }
 
 export interface Result {
+	//TODO: Remove all snake_case from this codebase
 	email: string;
 	challenge_name: string;
 	promotion_name: string;

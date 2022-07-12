@@ -1,6 +1,13 @@
+import { SshUserConfig } from "./ssh";
+
+export interface EvaluationTestParams {
+	userConfig?: SshUserConfig;
+	stdin: string;
+	stdout: string;
+}
 export interface EvaluationTestResult {
 	isSuccess: boolean;
-	error: string;
+	error?: string;
 }
 
 export interface EvaluationResult {

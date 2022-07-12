@@ -1,8 +1,8 @@
 import { readFileSync } from "fs";
 import path from "path";
-import { IUserConfig, IConfig } from "../interfaces/ssh";
+import { SshUserConfig, IConfig } from "../interfaces/ssh";
 
-export const sshUserConfig = (config: IUserConfig): IConfig => {
+export const sshUserConfig = (config: SshUserConfig): IConfig => {
 	return {
 		host: config.host,
 		port: config.port,

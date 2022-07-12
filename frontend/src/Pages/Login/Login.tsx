@@ -8,9 +8,12 @@ export const Login = (): JSX.Element => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		setEmail(e.target[0].value);
-		loginUser({ email: email });
+		await loginUser({ email: email });
 	};
+
+	function handleChange(e) {
+		setEmail(e.target.value);
+	}
 
 	return (
 		<div className="container">
@@ -21,7 +24,7 @@ export const Login = (): JSX.Element => {
 				<form onSubmit={onSubmit}>
 					<div className="user-box">
 						<label>
-							<input placeholder="email" type="email" onChange={(e) => setEmail} />
+							<input placeholder="email" type="email" onChange={handleChange} />
 						</label>
 					</div>
 					<button className="button-submit" type="submit">

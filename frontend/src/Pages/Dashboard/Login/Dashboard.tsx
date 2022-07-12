@@ -7,6 +7,7 @@ import { getPromotionName } from "../../../hook/getPromotionName";
 import { getUserByPromotionName } from "../../../hook/getUserByPromotionName";
 import { Table } from "../../../Components/table/Table.component";
 
+import { getUsers } from "../../../hook/getUsers";
 import "./Dashboard.scss";
 
 export const Dashboard = (): JSX.Element => {
