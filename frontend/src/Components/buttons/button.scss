@@ -1,0 +1,35 @@
+button {
+	width: 8em;
+	height: 3em;
+	border: none;
+	border-radius: 0.25em;
+	color: white;
+	cursor: pointer;
+	transition-duration: 0.25s;
+	align-items: center;
+	justify-content: center;
+	letter-spacing: 0.2em;
+	display: flex;
+	margin: auto;
+}
+
+.buttons {
+	.check-btn {
+		background-color: teal !important;
+
+		&:hover {
+			// background-color: lighten(teal, 10%);
+			background-color: bisque;
+		}
+	}
+	.add-promo-btn {
+		margin-top: 5rem;
+		background-color: pink !important;
+		display: flex;
+		align-items: center;
+
+		&:hover {
+			background-color: bisque;
+		}
+	}
+}

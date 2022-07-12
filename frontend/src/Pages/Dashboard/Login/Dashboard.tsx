@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { CardDescription } from "../../../Components/card/CardDescription.component";
-import { SideBar } from "../../../Components/SideBar/SideBar.component";
-import { Table } from "../../../Components/Table.component";
+import { CardDescription } from "../../../components/main/CardDescription.component";
+import { SideBar } from "../../../Components/sideBar/SideBar.component";
+// import { Table } from "../../../Components/table/Table.component";
+import { ButtonAdd } from "../../../components/buttons/ButtonAdd.component";
 import "./Dashboard.scss";
 
 export const Dashboard = (): JSX.Element => {
@@ -16,43 +17,29 @@ export const Dashboard = (): JSX.Element => {
 		score: 0,
 	};
 
-	const userTest = {
-		email: "test@est.com",
-		score: 0,
-		firstname: "li",
-		lastname: "li",
-	};
+	// const userTest = {
+	// 	email: "test@est.com",
+	// 	score: 0,
+	// 	firstname: "li",
+	// 	lastname: "li",
+	// };
 
 	return (
-		<div className="container">
-			<SideBar
-				challenges={[
-					{ id: "0", name: "Challenge 1" },
-					{ id: "0", name: "Challenge 2" },
-				]}
-			/>
+		<div className="App">
+			<div className="container">
+				<SideBar
+					challenges={[
+						{ id: "0", name: "Challenge 1" },
+						{ id: "0", name: "Challenge 2" },
+					]}
+				/>
 
-			<div>
-				<div className="Cards">
-					<div className="parrentContainer">
-						<CardDescription cardType={"promo"} promoList={[promoTest]} />
-					</div>
-					<div className="parrentContainer">
-						<CardDescription cardType={"promo"} promoList={[promoTest]} />
-					</div>
-					<div className="parrentContainer">
-						<CardDescription cardType={"promo"} promoList={[promoTest]} />
-					</div>
-					<div className="parrentContainer">
-						<CardDescription cardType={"promo"} promoList={[promoTest]} />
-					</div>
-				</div>
-				<div>
-					<Table users={[userTest]} />
-				</div>
+				<CardDescription cardType={"promo"} promoList={[promoTest]} />
+				<ButtonAdd />
+				{/* <Table users={[userTest]} /> */}
+
+				{/* <CardDescription cardType={"question"} question={{ id: "1", name: "test", statement: "connectez vous" }} /> */}
 			</div>
-
-			{/* <CardDescription cardType={"question"} question={{ id: "1", name: "test", statement: "connectez vous" }} /> */}
 		</div>
 	);
 };
