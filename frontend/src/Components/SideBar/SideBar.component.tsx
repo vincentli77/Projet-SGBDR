@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Logo from "../../imgs/logo.png";
 import { Challenge } from "../../interfaces/challenge.interface";
+import { ButtonAddChallenge } from "../buttons/ButtonAddChallenge.component";
 import { Menu } from "./Menu.component";
 import "./SideBar.scss";
 
@@ -9,8 +10,6 @@ interface Props {
 }
 
 export const SideBar = (props: Props): JSX.Element => {
-	const [selected, setSelected] = useState(-1);
-
 	return (
 		<div className="sidebar">
 			<div className="logo">
@@ -20,6 +19,7 @@ export const SideBar = (props: Props): JSX.Element => {
 				</span>
 			</div>
 			<Menu menuType={"challenges"} list={props.challenges} />
+			<ButtonAddChallenge />
 		</div>
 	);
 };

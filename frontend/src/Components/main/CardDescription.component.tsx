@@ -4,6 +4,7 @@ import { Question } from "../../interfaces/question.interface";
 import { CardQuestion } from "./CardQuestion.component";
 import "./Card.scss";
 import { Cards } from "./Cards.component";
+import { TestOne } from "../test0/TestOne.component";
 import { ButtonCheck } from "../buttons/ButtonCheck.component";
 
 // const userTest = {
@@ -33,6 +34,8 @@ export const CardDescription = (props: Props): JSX.Element => {
 			)}
 
 			{/* <Table users={[userTest]} /> */}
+
+			<TestOne />
 			<ButtonCheck />
 		</div>
 	);

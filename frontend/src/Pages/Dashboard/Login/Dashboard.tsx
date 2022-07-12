@@ -3,7 +3,7 @@ import React from "react";
 import { CardDescription } from "../../../components/main/CardDescription.component";
 import { SideBar } from "../../../Components/sideBar/SideBar.component";
 // import { Table } from "../../../Components/table/Table.component";
-import { ButtonAdd } from "../../../components/buttons/ButtonAdd.component";
+import { ButtonAddPromo } from "../../../components/buttons/ButtonAddPromo.component";
 import "./Dashboard.scss";
 
 export const Dashboard = (): JSX.Element => {
@@ -35,7 +35,7 @@ export const Dashboard = (): JSX.Element => {
 				/>
 
 				<CardDescription cardType={"promo"} promoList={[promoTest]} />
-				<ButtonAdd />
+				<ButtonAddPromo />
 				{/* <Table users={[userTest]} /> */}
 
 				{/* <CardDescription cardType={"question"} question={{ id: "1", name: "test", statement: "connectez vous" }} /> */}
