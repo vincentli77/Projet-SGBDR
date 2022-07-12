@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 import { Request, Response } from "express";
 import { getChallenges as getChallengesQuery } from "../crud/challenge";
+import { getPromoName as getPromoNameQuery } from "../crud/promotion";
+
 import { Connect, Query } from "../services/database.service";
 import {
 	getUsers as getUsersQuery,
@@ -105,6 +107,24 @@ export const createResult = async (req: Request, res: Response): Promise<void> =
 		const createResult = await Query(connection, createResultQuery,[user.email, user.challenge_name, user.promotion_name]);
 
 		res.status(200).send({ createResult,message:'create result success' });
+	} catch (error) {
+		res.status(500).send({ error,message: "Connection failed" });
+	}
+};
+
+export const getPromoName = async (req: Request, res: Response): Promise<void> => {
+	const connection = await Connect();
+
+	try {
+		const promotion = await Query(connection, getPromoNameQuery );
+
+		if(!promotion) {
+			res.status(404).send("No promo found");
+			return;
+		}
+
+			res.status(200).send({ promotion, message : "get all promo name success" });
+			connection.end();
 	} catch (error) {
 		res.status(500).send({ error,message: "Connection failed" });
 	}

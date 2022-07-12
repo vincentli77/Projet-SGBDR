@@ -1,7 +1,7 @@
 import { sshConnection } from "./ssh.controller";
 import { mailProvider, refreshToken, accessToken } from "../controllers/auth.controller";
 import { getUsers, createUser, getUsersByPromotionName, challenges, updateUserScore,
-	 createResult } from "./users.controller";
+	 createResult ,getPromoName } from "./users.controller";
 export {
 	mailProvider,
 	refreshToken,
@@ -13,4 +13,5 @@ export {
 	updateUserScore as updateScoreUser,
 	challenges,
 	createResult,
+	getPromoName,
 };
