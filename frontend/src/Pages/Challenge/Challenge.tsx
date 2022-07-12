@@ -9,22 +9,25 @@ import { ChallengeThree } from "./AllChallenge/ChallengeFour";
 import { ChallengeFive } from "./AllChallenge/ChallengeSix";
 import { ChallengeOne } from "./AllChallenge/ChallengeTwo";
 import { sshChallenge } from "../../hook/sshChallenge";
+import { Subscribe } from "./AllChallenge/Subscribe";
 
 export const Challenge = (): JSX.Element => {
-	const step = 6;
+	const step = 1;
 
 	switch (step) {
 		case 1:
-			return <Introduction />;
+			return <Subscribe />;
 		case 2:
-			return <ChallengeOne />;
+			return <Introduction />;
 		case 3:
-			return <ChallengeTwo />;
+			return <ChallengeOne />;
 		case 4:
-			return <ChallengeThree />;
+			return <ChallengeTwo />;
 		case 5:
-			return <ChallengeFour />;
+			return <ChallengeThree />;
 		case 6:
+			return <ChallengeFour />;
+		case 7:
 			return <ChallengeFive />;
 	}
 };
