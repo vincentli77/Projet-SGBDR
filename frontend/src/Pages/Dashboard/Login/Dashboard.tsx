@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { CardDescription } from "../../../Components/card/CardDescription.component";
 import { SideBar } from "../../../Components/SideBar/SideBar.component";
 import { Table } from "../../../Components/Table.component";
-import { getUser } from "../../../hook/getUsers";
+import { getUsers } from "../../../hook/getUsers";
 import "./Dashboard.scss";
 
 export const Dashboard = (): JSX.Element => {
@@ -11,7 +11,7 @@ export const Dashboard = (): JSX.Element => {
 	const promotion = "MT4_2022";
 
 	useEffect(() => {
-		getUser(promotion).then(function (result) {
+		getUsers(promotion).then(function (result) {
 			setUsers(result);
 		});
 	}, []);
