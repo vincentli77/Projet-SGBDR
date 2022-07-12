@@ -1,6 +1,6 @@
 import React from "react";
 import { Promo } from "../../interfaces/result.interface";
-import { Card } from "../card/Card.component";
+import { Card } from "./Card.component";
 interface Props {
 	promos: Promo[];
 }

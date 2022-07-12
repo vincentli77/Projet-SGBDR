@@ -4,7 +4,7 @@ import { Header } from "./Header.component";
 import { Row } from "./Row.component";
 import TableContainer from "@mui/material/TableContainer";
 import { Paper, TableBody, TableHead } from "@mui/material";
-import { UserScore } from "../interfaces/user.interface";
+import { UserScore } from "../../interfaces/user.interface";
 
 interface Props {
 	users?: UserScore[];

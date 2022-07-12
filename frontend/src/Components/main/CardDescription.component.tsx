@@ -3,6 +3,7 @@ import { Cards } from "./Cards.component";
 import { Promo } from "../interfaces/result.interface";
 import { Question } from "../interfaces/question.interface";
 import { CardQuestion } from "./CardQuestion.component";
+import { ButtonCheck } from "../buttons/ButtonCheck.component";
 
 interface Props {
 	cardType: "promo" | "question";
@@ -12,7 +13,7 @@ interface Props {
 
 export const CardDescription = (props: Props): JSX.Element => {
 	return (
-		<div>
+		<div className="MainDash">
 			{props.cardType === "promo" ? (
 				<div>
 					<Cards promos={props.promoList[0]} /> |
@@ -22,6 +23,9 @@ export const CardDescription = (props: Props): JSX.Element => {
 					<CardQuestion name={props.question.name} description={props.question.description} type={"blue"} />
 				</div>
 			)}
+
+			{/* <Table users={[userTest]} /> */}
+			<ButtonCheck />
 		</div>
 	);
 };

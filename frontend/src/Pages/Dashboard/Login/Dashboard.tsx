@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { CardDescription } from "../../../Components/card/CardDescription.component";
 import { SideBar } from "../../../Components/SideBar/SideBar.component";
-import { Table } from "../../../Components/Table.component";
 import { getPromotionName } from "../../../hook/getPromotionName";
 import { getUserByPromotionName } from "../../../hook/getUserByPromotionName";
+
+import { ButtonAdd } from "../../../components/buttons/ButtonAdd.component";
 import "./Dashboard.scss";
 
 export const Dashboard = (): JSX.Element => {
@@ -31,16 +32,8 @@ export const Dashboard = (): JSX.Element => {
 				]}
 			/>
 
-			<div>
-				<div className="Cards">
-					<CardDescription cardType={"promo"} promoList={[promotions]} />
-				</div>
-				<div>
-					<Table users={users} />
-				</div>
-			</div>
-
-			{/* <CardDescription cardType={"question"} question={{ id: "1", name: "test", statement: "connectez vous" }} /> */}
+			<CardDescription cardType={"promo"} promoList={[promotions]} />
+			<ButtonAdd />
 		</div>
 	);
 };
