@@ -9,7 +9,7 @@ import {
 	updateUserScore as updateUserScoreQuery,
 	createResult as createResultQuery,
 } from "../crud/user";
-import { User, UserChallengeResult } from "../interfaces/user.interface";
+import { User, UserChallengeResult,Result } from "../interfaces/user.interface";
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
 	const connection = await Connect();
@@ -98,7 +98,7 @@ export const challenges = async (req: Request, res: Response): Promise<void> => 
 export const createResult = async (req: Request, res: Response): Promise<void> => {
 	const connection = await Connect();
 
-		const user = {
+		const user: Result = {
 		email: req.body.email,
 		challenge_name: req.body.challenge_name,
 		promotion_name: req.body.promotion_name,
