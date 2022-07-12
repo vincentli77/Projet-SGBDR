@@ -8,6 +8,8 @@ import {
 	updateUserScore,
 	createResult,
 	getPromoName,
+	getUserByMail,
+
 } from "./users.controller";
 
 export {
@@ -22,4 +24,5 @@ export {
 	challenges,
 	createResult,
 	getPromoName,
+	getUserByMail,
 };

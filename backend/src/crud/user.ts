@@ -4,6 +4,8 @@
 export const getUsers = "SELECT * FROM Users";
 export const getUsersByPromotionName = `SELECT * FROM Users  WHERE 
 promo_id = (SELECT id FROM Promotions WHERE Promotions.name = ?)`;
+export const getUserByMail = "SELECT * FROM Users WHERE email = ?";
+
 
 
  
