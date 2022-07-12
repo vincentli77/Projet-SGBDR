@@ -9,6 +9,7 @@ interface Props {
 	cardType: "promo" | "question";
 	promoList?: Promo[];
 	question?: Question;
+	getCurrentPromo?: any;
 }
 
 export const CardDescription = (props: Props): JSX.Element => {
@@ -16,7 +17,7 @@ export const CardDescription = (props: Props): JSX.Element => {
 		<div className="MainDash">
 			{props.cardType === "promo" ? (
 				<div>
-					<Cards promos={props.promoList[0]} /> |
+					<Cards getCurrentPromo={props.getCurrentPromo} promos={props.promoList} />
 				</div>
 			) : (
 				<div>

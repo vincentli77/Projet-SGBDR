@@ -8,11 +8,17 @@ interface Props {
 	averageScore: number;
 	createdAt: string;
 	type: "blue" | "purple" | "pink" | "yellow";
+	getCurrentPromo?: any;
 }
 
 export const Card = (props: Props): JSX.Element => {
 	return (
-		<motion.div className={`CompactCard ${props.type}`}>
+		<motion.div
+			className={`CompactCard ${props.type}`}
+			onClick={() => {
+				props.getCurrentPromo(props.promoName);
+			}}
+		>
 			<div className="radialBar">
 				<span>{props.promoName}</span>
 			</div>
