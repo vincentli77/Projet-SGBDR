@@ -13,3 +13,7 @@
 	background-color: var(--glass);
 	grid-template-columns: 11rem auto 15rem;
 }
+.Cards {
+	overflow: scroll !important;
+	height: 7em !important;
+}
