@@ -1,0 +1,106 @@
+$border-color-1: #ffddd6;
+$border-color-2: #9699cc;
+$border-color-3: #9defeb;
+$border-color-4: #ff97cb;
+$border-color-5: #ffee8b;
+
+.big-container {
+	background: linear-gradient(106.37deg, #ffe1bc 29.63%, #ffcfd1 51.55%, #f3c6f1 90.65%);
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	font-family: "Inter", sans-serif;
+	.container {
+		display: grid;
+		height: 97%;
+		width: 97%;
+		border-radius: 2rem;
+		background-color: var(--glass);
+		overflow: hidden;
+		grid-template-columns: 11rem 9rem;
+	}
+}
+
+.cards {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 50px;
+
+	margin: 25px;
+
+	width: 1000px;
+
+	.card {
+		letter-spacing: 0.1em;
+		color: aliceblue;
+		padding: 2em 2em;
+		width: 50em;
+		height: 20em;
+		overflow: scroll;
+
+		border-radius: 20px;
+
+		animation: card-scale 2s ease-in-out infinite;
+
+		.card_statement {
+			color: #9699cc;
+		}
+
+		&-2 {
+			background-color: #ffbdb2;
+
+			border-right: 8px solid $border-color-2;
+			border-bottom: 8px solid $border-color-2;
+
+			animation-delay: -1.6s;
+		}
+		&-3 {
+			background-color: $border-color-3;
+		}
+
+		&-4 {
+			background-color: $border-color-4;
+		}
+
+		&-5 {
+			background-color: $border-color-5;
+		}
+	}
+}
+button {
+	margin-top: 2em;
+	width: 5em;
+	height: 3em;
+	border: none;
+	border-radius: 0.25em;
+	color: white;
+	cursor: pointer;
+	transition-duration: 0.25s;
+	align-items: center;
+	justify-content: center;
+	letter-spacing: 0.2em;
+	display: flex;
+	margin: auto;
+}
+
+.buttons {
+	.check-btn {
+		margin-top: 2em;
+		background-color: teal !important;
+
+		&:hover {
+			// background-color: lighten(teal, 10%);
+			background-color: bisque;
+		}
+	}
+	.add-promo-btn {
+		margin-top: 5rem;
+		background-color: pink !important;
+		display: flex;
+		align-items: center;
+
+		&:hover {
+			background-color: bisque;
+		}
+	}
+}

@@ -3,15 +3,15 @@ import React from "react";
 
 import "./Challenge.scss";
 import { Introduction } from "./AllChallenge/Introduction";
-import { ChallengeFour } from "./AllChallenge/ChallengeFour";
-import { ChallengeTwo } from "./AllChallenge/ChallengeTwo";
-import { ChallengeThree } from "./AllChallenge/ChallengeThree";
-import { ChallengeFive } from "./AllChallenge/ChallengeFive";
-import { ChallengeOne } from "./AllChallenge/ChallengeOne";
+import { ChallengeFour } from "./AllChallenge/ChallengeFive";
+import { ChallengeTwo } from "./AllChallenge/ChallengeThree";
+import { ChallengeThree } from "./AllChallenge/ChallengeFour";
+import { ChallengeFive } from "./AllChallenge/ChallengeSix";
+import { ChallengeOne } from "./AllChallenge/ChallengeTwo";
 import { sshChallenge } from "../../hook/sshChallenge";
 
 export const Challenge = (): JSX.Element => {
-	const step = 5;
+	const step = 6;
 
 	switch (step) {
 		case 1:

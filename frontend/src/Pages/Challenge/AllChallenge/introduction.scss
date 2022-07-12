@@ -1,0 +1,103 @@
+$border-color-2: #ffddd6;
+$color-dark: #333344;
+
+.cards {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 50px;
+
+	margin: 25px;
+
+	width: 1000px;
+
+	.score {
+		border: 3px solid $color-dark;
+		padding: 10px 20px;
+		background-color: transparent;
+		color: $color-dark;
+		font-size: 30px;
+	}
+	p .intro {
+		margin-bottom: 1em;
+		color: white;
+		font-weight: 800;
+	}
+	.card {
+		letter-spacing: 0.1em;
+		color: aliceblue;
+		padding: 2em 2em;
+		width: 50em;
+		height: 20em;
+		overflow: scroll;
+
+		border-radius: 20px;
+
+		animation: card-scale 2s ease-in-out infinite;
+
+		&-1 {
+			background-color: #ffbdb2;
+
+			border-right: 8px solid $border-color-2;
+			border-bottom: 8px solid $border-color-2;
+
+			animation-delay: -1.6s;
+
+			.color-grey {
+				color: #a5a5a5;
+			}
+		}
+	}
+}
+.input-test-one {
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+
+	input {
+		margin-bottom: 1em;
+		padding: 5px;
+		font-size: 16px;
+		border-width: 0px;
+		border-color: #fff;
+		background-color: #ffffff;
+		color: #000000;
+		border-style: hidden;
+		border-radius: 6px;
+	}
+}
+
+button {
+	width: 8em !important;
+	height: 3em;
+	border: none;
+	border-radius: 0.25em;
+	color: white;
+	cursor: pointer;
+	transition-duration: 0.25s;
+	align-items: center;
+	justify-content: center;
+	letter-spacing: 0.2em;
+	display: flex;
+	margin: auto;
+}
+
+.buttons {
+	.check-btn {
+		background-color: teal !important;
+
+		&:hover {
+			// background-color: lighten(teal, 10%);
+			background-color: bisque;
+		}
+	}
+	.add-promo-btn {
+		margin-top: 5rem;
+		background-color: pink !important;
+		display: flex;
+		align-items: center;
+
+		&:hover {
+			background-color: bisque;
+		}
+	}
+}
