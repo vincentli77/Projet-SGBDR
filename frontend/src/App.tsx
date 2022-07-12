@@ -9,22 +9,22 @@ function App() {
 	const check_token = checkToken();
 
 	const email = sessionStorage.getItem("email");
-	const role = sessionStorage.getItem("role");
 	if (email) {
 		getUserInfo({ email }).then(function (result) {
-			sessionStorage.setItem("role", result.user[0].role);
+			sessionStorage.setItem("user", JSON.stringify(result.user));
 		});
 	}
+	const user = JSON.parse(sessionStorage.getItem("user"));
 
 	if (!check_token) {
 		return <Login />;
 	}
 
-	return role == "admin" ? (
+	return (
 		<div className="App">
 			<Dashboard />
 		</div>
-	) : null;
+	);
 }
 
 export default App;
