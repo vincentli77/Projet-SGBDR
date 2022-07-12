@@ -21,3 +21,9 @@ export interface UserChallengeResult {
 	promoId: string;
 	createdAt: string;
 }
+
+export interface Result {
+	email: string;
+	challenge_name: string;
+	promotion_name: string;
+}

@@ -12,8 +12,11 @@ index.get("/accessToken", controller.accessToken);
 //crud users
 index.get("/users", controller.getUsers);
 index.post("/user/create", controller.createUser);
+index.post("/result", controller.createResult);
+
 index.get("/usersPromo", controller.getUsersPromo);
 index.get("/challenges", controller.challenges);
+index.get("/promoName", controller.getPromoName);
 index.put("/updateScoreUser", controller.updateScoreUser);
 
 index.get("/");

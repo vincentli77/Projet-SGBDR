@@ -1,28 +1,33 @@
 /* eslint-disable max-len */
 import { Request, Response } from "express";
-import { getChallenges } from "../crud/challenge";
-import { Connect } from "../services/database.service";
+import { getChallenges as getChallengesQuery } from "../crud/challenge";
+import { getPromoName as getPromoNameQuery } from "../crud/promotion";
+
+import { Connect, Query } from "../services/database.service";
 import {
 	getUsers as getUsersQuery,
 	createUser as createUserQuery,
 	getUsersByPromotionName as getUsersByPromotionNameQuery,
 	updateUserScore as updateUserScoreQuery,
+	createResult as createResultQuery,
 } from "../crud/user";
-import { MysqlError } from "mysql";
-import { User, UserChallengeResult } from "../interfaces/user.interface";
-import { Challenge } from "../interfaces/challenge";
+import { User, UserChallengeResult, Result } from "../interfaces/user.interface";
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
 	const connection = await Connect();
 
 	try {
-		connection.query(getUsersQuery, (error: MysqlError | null, result: User[]) => {
-			if (error) res.status(500).send(error);
+		const users = await Query(connection, getUsersQuery);
 
-			res.status(200).send(result);
-		});
+		if (!users) {
+			res.status(404).send("No user found");
+			return;
+		}
+
+		res.status(200).send({ users, message: "get all users success" });
+		connection.end();
 	} catch (error) {
-		res.status(500).send(error);
+		res.status(500).send({ error, message: "Connection failed" });
 	}
 };
 
@@ -33,21 +38,14 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 		email: req.body.email,
 		first_name: req.body.firstname,
 		last_name: req.body.lastname,
-		role: req.body.role,
+		role: "student",
 	};
 
 	try {
-		connection.query(
-			createUserQuery,
-			[user, req.body.promotion],
-			function (error: MysqlError | null, result: User) {
-				if (error) res.status(500).send(error);
-
-				res.status(200).send(result);
-			},
-		);
+		const createUser = await Query(connection, createUserQuery, [user, req.body.promotion]);
+		res.status(200).send({ createUser, message: "User has been created" });
 	} catch (error) {
-		res.status(500).send(error);
+		res.status(500).send({ error, message: "Connection failed" });
 	}
 };
 
@@ -55,13 +53,10 @@ export const getUsersByPromotionName = async (req: Request, res: Response): Prom
 	const connection = await Connect();
 
 	try {
-		connection.query(getUsersByPromotionNameQuery, function (error: MysqlError | null, result: User[]) {
-			if (error) res.status(500).send(error);
-
-			res.status(200).send(result);
-		});
+		const getUsersByPromotionName = await Query(connection, getUsersByPromotionNameQuery, [req.body.promotion]);
+		res.status(200).send({ getUsersByPromotionName, message: "get users by promotion name success" });
 	} catch (error) {
-		res.status(500).send(error);
+		res.status(500).send({ error, message: "Connection failed" });
 	}
 };
 
@@ -75,29 +70,64 @@ export const updateUserScore = async (req: Request, res: Response): Promise<void
 	};
 
 	try {
-		connection.query(
-			updateUserScoreQuery,
-			[userChallengeResult.score, userChallengeResult.userId, userChallengeResult.challengeId],
-			function (error: MysqlError | null, result: UserChallengeResult) {
-				if (error) res.status(500).send(error);
-
-				res.status(200).send({ result });
-			},
-		);
+		const updateUserScore = await Query(connection, updateUserScoreQuery, [
+			userChallengeResult.score,
+			userChallengeResult.userId,
+			userChallengeResult.challengeId,
+		]);
+		res.status(200).send({ updateUserScore, message: "score update success" });
 	} catch (error) {
-		res.status(500).send(error);
+		res.status(500).send({ error, message: "Connection failed" });
 	}
 };
 export const challenges = async (req: Request, res: Response): Promise<void> => {
 	const connection = await Connect();
 
 	try {
-		connection.query(getChallenges, function (error: MysqlError | null, result: Challenge[]) {
-			if (error) res.status(500).send(error);
+		const getChallenges = await Query(connection, getChallengesQuery);
 
-			res.status(200).send(result);
-		});
-	} catch (err) {
-		res.status(500).send({ err });
+		res.status(200).send({ getChallenges, message: "get challenges success" });
+	} catch (error) {
+		res.status(500).send({ error, message: "Connection failed" });
+	}
+};
+
+export const createResult = async (req: Request, res: Response): Promise<void> => {
+	const connection = await Connect();
+
+	const user: Result = {
+		email: req.body.email,
+		challenge_name: req.body.challenge_name,
+		promotion_name: req.body.promotion_name,
+	};
+
+	try {
+		const createResult = await Query(connection, createResultQuery, [
+			user.email,
+			user.challenge_name,
+			user.promotion_name,
+		]);
+
+		res.status(200).send({ createResult, message: "create result success" });
+	} catch (error) {
+		res.status(500).send({ error, message: "Connection failed" });
+	}
+};
+
+export const getPromoName = async (req: Request, res: Response): Promise<void> => {
+	const connection = await Connect();
+
+	try {
+		const promotion = await Query(connection, getPromoNameQuery);
+
+		if (!promotion) {
+			res.status(404).send("No promo found");
+			return;
+		}
+
+		res.status(200).send({ promotion, message: "get all promo name success" });
+		connection.end();
+	} catch (error) {
+		res.status(500).send({ error, message: "Connection failed" });
 	}
 };
