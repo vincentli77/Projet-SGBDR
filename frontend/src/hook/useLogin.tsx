@@ -1,4 +1,4 @@
-export async function queryChallenge(data) {
+export async function loginUser(data) {
 	const email = { email: data.email };
 
 	return fetch("http://localhost:3333/mailProvider", {
