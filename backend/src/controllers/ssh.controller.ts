@@ -5,10 +5,6 @@ import { SshUserConfig } from "../interfaces/ssh";
 import { sequencerService } from "../services/sequencer.service";
 
 interface ReqBody extends SshUserConfig {
-	event: {
-		name: string;
-		state: ReadonlyArray<string>;
-	};
 	user: {
 		email: string;
 		promotion_name: string;
@@ -21,7 +17,7 @@ interface _Response extends StateMachineContext {
 }
 
 export const evaluationFlow = async (req: Request<unknown, unknown, ReqBody>, res: Response): Promise<void> => {
-	const { host, port, username, event, user } = req?.body ?? {};
+	const { host, port, username, user } = req?.body ?? {};
 
 	if (!host || !port || !username) {
 		res.status(401).send(
@@ -56,36 +52,40 @@ export const evaluationFlow = async (req: Request<unknown, unknown, ReqBody>, re
 			}
 		});
 
-		event &&
-			!!event.state.length &&
-			event.state.forEach(async (exercice) => {
-				try {
-					await waitFor(sequencer, (state) => state.matches(exercice), { timeout: 25000 });
+		["exercice01", "exercice02", "exercice03", "exercice04", "exercice05"].forEach(async (exercice) => {
+			try {
+				await waitFor(sequencer, (state) => state.matches(exercice), { timeout: 25000 });
 
-					sequencer.send(event.name);
+				sequencer.send("TEST_DOING");
 
-					sequencer.onTransition((state) => {
-						if (state.event.type === `done.invoke.${exercice}`) {
-							response = {
-								...response,
-								score: state.context.score,
-								succeedExercices: [...response.succeedExercices, exercice],
-							};
-						}
+				sequencer.onTransition((state) => {
+					if (state.event.type === `done.invoke.${exercice}`) {
+						response = {
+							...response,
+							score: state.context.score,
+							succeedExercices: [...response.succeedExercices, exercice],
+						};
+					}
 
-						if (state.event.type === `error.platform.${exercice}`) {
-							response = {
-								...response,
-								score: state.context.score,
-								errorMessage: state.context.errorMessage,
-							};
-						}
-					});
-				} catch (error) {}
-			});
+					if (state.event.type === `error.platform.${exercice}`) {
+						response = {
+							...response,
+							score: state.context.score,
+							errorMessage: state.context.errorMessage,
+						};
+					}
+				});
+			} catch (error) {}
+		});
 
 		sequencer.onChange((state) => {
 			if (state.errorMessage) res.status(200).send(response);
+		});
+
+		sequencer.onDone((event) => {
+			if (event.type === "done.invoke.assessment-tests-sequencer") {
+				res.status(200).send(response);
+			}
 		});
 	} catch (error) {}
 };
