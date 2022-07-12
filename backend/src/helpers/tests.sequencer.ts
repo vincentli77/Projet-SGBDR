@@ -1,14 +1,13 @@
-import { assign, createMachine, DoneInvokeEvent, send } from "xstate";
+import { assign, createMachine, DoneInvokeEvent } from "xstate";
 import { SshUserConfig, Uptime } from "../interfaces/ssh";
 import { uptimeService } from "../services/uptime.service";
 import { EvaluationTestResult } from "../interfaces/evaluation.interface";
 import { exercice01, exercice02, exercice03, exercice04, exercice05 } from "../tests/exercices/index";
-
-// This function update the database with the new score and return the value to update the context
-const updateScore = (context: StateMachineContext) => context.score + 1;
+import { Result } from "../interfaces/user.interface";
 
 export interface StateMachineContext {
 	ssh: SshUserConfig;
+	user: Result; //TODO: Rename this shit
 	score: number;
 	isConnected: boolean;
 	errorMessage: string | undefined;
@@ -16,6 +15,7 @@ export interface StateMachineContext {
 
 export const stateMachineContext: StateMachineContext = {
 	ssh: { port: null, host: null, username: null } as SshUserConfig,
+	user: { email: null, challenge_name: null, promotion_name: null } as Result,
 	score: 0,
 	isConnected: false,
 	errorMessage: undefined,

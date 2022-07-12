@@ -9,6 +9,11 @@ interface ReqBody extends SshUserConfig {
 		name: string;
 		state: ReadonlyArray<string>;
 	};
+	user: {
+		email: string;
+		promotion_name: string;
+		challenge_name: string;
+	};
 }
 
 interface _Response extends StateMachineContext {
@@ -16,7 +21,7 @@ interface _Response extends StateMachineContext {
 }
 
 export const evaluationFlow = async (req: Request<unknown, unknown, ReqBody>, res: Response): Promise<void> => {
-	const { host, port, username, event } = req?.body ?? {};
+	const { host, port, username, event, user } = req?.body ?? {};
 
 	if (!host || !port || !username) {
 		res.status(401).send(
@@ -25,7 +30,7 @@ export const evaluationFlow = async (req: Request<unknown, unknown, ReqBody>, re
 		return;
 	}
 
-	const sequencer = sequencerService({ host, port, username });
+	const sequencer = sequencerService({ host, port, username }, user);
 
 	let response: _Response = { ...sequencer.state.context, succeedExercices: [] };
 
