@@ -3,6 +3,7 @@ import { SshUserConfig, Uptime } from "../interfaces/ssh";
 import { uptimeService } from "../services/uptime.service";
 import { EvaluationTestResult } from "../interfaces/evaluation.interface";
 import { exercice01, exercice02, exercice03, exercice04, exercice05 } from "../tests/exercices/index";
+import { updateUserScoreService } from "../services/user.service";
 import { Result } from "../interfaces/user.interface";
 
 export interface StateMachineContext {
@@ -34,10 +35,10 @@ export const sequencer = createMachine({
 				id: "uptime",
 				src: async ({ ssh: { host, port, username } }) => await uptimeService({ host, port, username }),
 				onDone: {
-					target: "exercice01",
+					target: "connected",
 					actions: assign({
 						isConnected: (context, event: DoneInvokeEvent<Uptime>) => event.data.connected,
-						score: (context: StateMachineContext) => updateScore(context),
+						score: (context: StateMachineContext) => 1,
 					}),
 				},
 				onError: {
@@ -45,6 +46,18 @@ export const sequencer = createMachine({
 					actions: assign({
 						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
 					}),
+				},
+			},
+		},
+		connected: {
+			invoke: {
+				id: "connection",
+				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				onDone: {
+					target: "exercice01",
+				},
+				onError: {
+					target: "termination",
 				},
 			},
 		},
@@ -58,14 +71,26 @@ export const sequencer = createMachine({
 				id: "exercice01",
 				src: async (context) => await exercice01(context.ssh),
 				onDone: {
-					target: "exercice02",
-					actions: assign({ score: (context: StateMachineContext) => updateScore(context) }),
+					target: "exercice01_success",
+					actions: assign({ score: (context: StateMachineContext) => 2 }),
 				},
 				onError: {
 					target: "exercice01",
 					actions: assign({
 						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
 					}),
+				},
+			},
+		},
+		exercice01_success: {
+			invoke: {
+				id: "exercice01_success",
+				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				onDone: {
+					target: "exercice02",
+				},
+				onError: {
+					target: "termination",
 				},
 			},
 		},
@@ -79,14 +104,26 @@ export const sequencer = createMachine({
 				id: "exercice02",
 				src: async (context) => await exercice02(context.ssh),
 				onDone: {
-					target: "exercice03",
-					actions: assign({ score: (context: StateMachineContext) => updateScore(context) }),
+					target: "exercice02_success",
+					actions: assign({ score: (context: StateMachineContext) => 6 }),
 				},
 				onError: {
 					target: "exercice02",
 					actions: assign({
 						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
 					}),
+				},
+			},
+		},
+		exercice02_success: {
+			invoke: {
+				id: "exercice02_success",
+				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				onDone: {
+					target: "exercice03",
+				},
+				onError: {
+					target: "termination",
 				},
 			},
 		},
@@ -100,14 +137,26 @@ export const sequencer = createMachine({
 				id: "exercice03",
 				src: async (context) => await exercice03(context.ssh),
 				onDone: {
-					target: "exercice04",
-					actions: assign({ score: (context: StateMachineContext) => updateScore(context) }),
+					target: "exercice03_success",
+					actions: assign({ score: (context: StateMachineContext) => 10 }),
 				},
 				onError: {
 					target: "exercice03",
 					actions: assign({
 						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
 					}),
+				},
+			},
+		},
+		exercice03_success: {
+			invoke: {
+				id: "exercice03_success",
+				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				onDone: {
+					target: "exercice04",
+				},
+				onError: {
+					target: "termination",
 				},
 			},
 		},
@@ -121,14 +170,26 @@ export const sequencer = createMachine({
 				id: "exercice04",
 				src: async (context) => await exercice04(context.ssh),
 				onDone: {
-					target: "exercice05",
-					actions: assign({ score: (context: StateMachineContext) => updateScore(context) }),
+					target: "exercice04_success",
+					actions: assign({ score: (context: StateMachineContext) => 15 }),
 				},
 				onError: {
 					target: "termination",
 					actions: assign({
 						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
 					}),
+				},
+			},
+		},
+		exercice04_success: {
+			invoke: {
+				id: "exercice04_success",
+				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				onDone: {
+					target: "exercice05",
+				},
+				onError: {
+					target: "termination",
 				},
 			},
 		},
@@ -142,8 +203,8 @@ export const sequencer = createMachine({
 				id: "exercice05",
 				src: async (context) => await exercice05(context.ssh),
 				onDone: {
-					target: "termination",
-					actions: assign({ score: (context: StateMachineContext) => updateScore(context) }),
+					target: "exercice05_success",
+					actions: assign({ score: (context: StateMachineContext) => 20 }),
 				},
 				onError: {
 					target: "exercice05",
@@ -153,6 +214,19 @@ export const sequencer = createMachine({
 				},
 			},
 		},
+		exercice05_success: {
+			invoke: {
+				id: "exercice05_success",
+				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				onDone: {
+					target: "termination",
+				},
+				onError: {
+					target: "termination",
+				},
+			},
+		},
+
 		termination: { type: "final" },
 	},
 });
