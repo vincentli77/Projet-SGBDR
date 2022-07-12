@@ -1,7 +1,11 @@
-
 /* ------------ Cards ------------- */
 
-
+.MainDash {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	padding: 2rem;
+}
 .parentContainer {
 	width: 100%;
 }

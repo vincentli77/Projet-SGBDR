@@ -1,7 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { CircularProgressbar } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
 import { BsPeople } from "react-icons/bs";
 import "./Card.scss";
 
