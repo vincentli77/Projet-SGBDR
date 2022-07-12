@@ -1,90 +1,232 @@
-import { assign, createMachine } from "xstate";
+import { assign, createMachine, DoneInvokeEvent } from "xstate";
+import { SshUserConfig, Uptime } from "../interfaces/ssh";
+import { uptimeService } from "../services/uptime.service";
+import { EvaluationTestResult } from "../interfaces/evaluation.interface";
+import { exercice01, exercice02, exercice03, exercice04, exercice05 } from "../tests/exercices/index";
+import { updateUserScoreService } from "../services/user.service";
+import { Result } from "../interfaces/user.interface";
 
-import { verifyIfFileExistOnRemoteSession, countJsFileOnRemoteSession, convertInMsOnRemoteSession, verifyIfIpIsValidOnRemoteSession, findSmallestNumberOnRemoteSession } from "../tests/index";
+export interface StateMachineContext {
+	ssh: SshUserConfig;
+	user: Result; //TODO: Rename this shit
+	score: number;
+	isConnected: boolean;
+	errorMessage: string | undefined;
+}
 
-// This function update the database with the new score and return the value to update the context
-const updateScore = () => 1;
+export const stateMachineContext: StateMachineContext = {
+	ssh: { port: null, host: null, username: null } as SshUserConfig,
+	user: { email: null, challenge_name: null, promotion_name: null } as Result,
+	score: 0,
+	isConnected: false,
+	errorMessage: undefined,
+};
 
-const sequencer = createMachine({
+export const sequencer = createMachine({
 	id: "assessment-tests-sequencer",
 	initial: "disconnected",
-	context: {
-		score: 0,
-		canProceed: false,
-	},
+	context: stateMachineContext,
 	states: {
-		// TODO:[important, not urgent] Replace the empty function by the result of the uptimeService
+		/**
+		 *
+		 */
 		disconnected: {
-			on: { CONNECT: { target: "connected", cond: () => true } },
+			invoke: {
+				id: "uptime",
+				src: async ({ ssh: { host, port, username } }) => await uptimeService({ host, port, username }),
+				onDone: {
+					target: "connected",
+					actions: assign({
+						isConnected: (context, event: DoneInvokeEvent<Uptime>) => event.data.connected,
+						score: (context: StateMachineContext) => 1,
+					}),
+				},
+				onError: {
+					target: "termination",
+					actions: assign({
+						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
+					}),
+				},
+			},
 		},
 		connected: {
-			on: {
-				START: {
+			invoke: {
+				id: "connection",
+				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				onDone: {
 					target: "exercice01",
-					actions: assign({ score: updateScore }),
+				},
+				onError: {
+					target: "termination",
 				},
 			},
 		},
 
-		exercice01: {
-			on: {
-				TEST_DOING: {
+		/**
+		 *
+		 */
+		exercice01: { on: { TEST_DOING: { target: "exercice01_invoke" } } },
+		exercice01_invoke: {
+			invoke: {
+				id: "exercice01",
+				src: async (context) => await exercice01(context.ssh),
+				onDone: {
+					target: "exercice01_success",
+					actions: assign({ score: (context: StateMachineContext) => 2 }),
+				},
+				onError: {
+					target: "exercice01",
+					actions: assign({
+						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
+					}),
+				},
+			},
+		},
+		exercice01_success: {
+			invoke: {
+				id: "exercice01_success",
+				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				onDone: {
 					target: "exercice02",
-					actions: assign({ score: updateScore }),
-					cond: () =>
-						verifyIfFileExistOnRemoteSession({
-							stdin: "",
-							stdout: "",
-						}).isSuccess,
+				},
+				onError: {
+					target: "termination",
 				},
 			},
 		},
-		exercice02: {
-			on: {
-				TEST_DOING: {
+
+		/**
+		 *
+		 */
+		exercice02: { on: { TEST_DOING: { target: "exercice02_invoke" } } },
+		exercice02_invoke: {
+			invoke: {
+				id: "exercice02",
+				src: async (context) => await exercice02(context.ssh),
+				onDone: {
+					target: "exercice02_success",
+					actions: assign({ score: (context: StateMachineContext) => 6 }),
+				},
+				onError: {
+					target: "exercice02",
+					actions: assign({
+						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
+					}),
+				},
+			},
+		},
+		exercice02_success: {
+			invoke: {
+				id: "exercice02_success",
+				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				onDone: {
 					target: "exercice03",
-					actions: assign({ score: updateScore }),
-					cond: () => countJsFileOnRemoteSession({ stdin: "", stdout: "" }).isSuccess,
+				},
+				onError: {
+					target: "termination",
 				},
 			},
 		},
-		exercice03: {
-			on: {
-				TEST_DOING: {
+
+		/**
+		 *
+		 */
+		exercice03: { on: { TEST_DOING: { target: "exercice03_invoke" } } },
+		exercice03_invoke: {
+			invoke: {
+				id: "exercice03",
+				src: async (context) => await exercice03(context.ssh),
+				onDone: {
+					target: "exercice03_success",
+					actions: assign({ score: (context: StateMachineContext) => 10 }),
+				},
+				onError: {
+					target: "exercice03",
+					actions: assign({
+						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
+					}),
+				},
+			},
+		},
+		exercice03_success: {
+			invoke: {
+				id: "exercice03_success",
+				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				onDone: {
 					target: "exercice04",
-					actions: assign({ score: updateScore }),
-					cond: () => convertInMsOnRemoteSession({ stdin: "", stdout: "" }).isSuccess,
+				},
+				onError: {
+					target: "termination",
 				},
 			},
 		},
-		exercice04: {
-			on: {
-				TEST_DOING: {
+
+		/**
+		 *
+		 */
+		exercice04: { on: { TEST_DOING: { target: "exercice04_invoke" } } },
+		exercice04_invoke: {
+			invoke: {
+				id: "exercice04",
+				src: async (context) => await exercice04(context.ssh),
+				onDone: {
+					target: "exercice04_success",
+					actions: assign({ score: (context: StateMachineContext) => 15 }),
+				},
+				onError: {
+					target: "termination",
+					actions: assign({
+						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
+					}),
+				},
+			},
+		},
+		exercice04_success: {
+			invoke: {
+				id: "exercice04_success",
+				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				onDone: {
 					target: "exercice05",
-					actions: assign({ score: updateScore }),
-					cond: () =>
-						verifyIfIpIsValidOnRemoteSession({
-							stdin: "",
-							stdout: "",
-						}).isSuccess,
+				},
+				onError: {
+					target: "termination",
 				},
 			},
 		},
-		exercice05: {
-			on: {
-				TEST_DOING: {
-					target: "disconnected",
-					actions: assign({ score: updateScore }),
-					cond: () =>
-						findSmallestNumberOnRemoteSession({
-							stdin: "",
-							stdout: "",
-						}).isSuccess,
+
+		/**
+		 *
+		 */
+		exercice05: { on: { TEST_DOING: { target: "exercice05_invoke" } } },
+		exercice05_invoke: {
+			invoke: {
+				id: "exercice05",
+				src: async (context) => await exercice05(context.ssh),
+				onDone: {
+					target: "exercice05_success",
+					actions: assign({ score: (context: StateMachineContext) => 20 }),
+				},
+				onError: {
+					target: "exercice05",
+					actions: assign({
+						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
+					}),
 				},
 			},
 		},
+		exercice05_success: {
+			invoke: {
+				id: "exercice05_success",
+				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				onDone: {
+					target: "termination",
+				},
+				onError: {
+					target: "termination",
+				},
+			},
+		},
+
 		termination: { type: "final" },
 	},
-
-	onDone: "disconnected",
 });

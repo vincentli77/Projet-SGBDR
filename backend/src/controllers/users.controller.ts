@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { Request, Response } from "express";
 import { getChallenges as getChallengesQuery } from "../crud/challenge";
 import { getPromoName as getPromoNameQuery } from "../crud/promotion";
@@ -15,7 +14,6 @@ import {
 import { User, UserChallengeResult, Result } from "../interfaces/user.interface";
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
-
 	try {
 		const connection = await Connect();
 		const users = await Query(connection, getUsersQuery);
@@ -33,7 +31,6 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 };
 
 export const getUserByMail = async (req: Request, res: Response): Promise<void> => {
-
 	try {
 		const connection = await Connect();
 		const user = await Query(connection, getUserByMailQuery, [req.body.email]);
@@ -51,7 +48,6 @@ export const getUserByMail = async (req: Request, res: Response): Promise<void> 
 };
 
 export const createUser = async (req: Request, res: Response): Promise<void> => {
-
 	const user: Omit<User, "id" | "promoId" | "createdAt"> = {
 		email: req.body.email,
 		first_name: req.body.firstname,
@@ -62,6 +58,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 	try {
 		const connection = await Connect();
 		const createUser = await Query(connection, createUserQuery, [user, req.body.promotion]);
+
 		res.status(200).send({ createUser, message: "User has been created" });
 		connection.end();
 	} catch (error) {
@@ -70,7 +67,6 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 };
 
 export const getUsersByPromotionName = async (req: Request, res: Response): Promise<void> => {
-
 	try {
 		const connection = await Connect();
 		const getUsersByPromotionName = await Query(connection, getUsersByPromotionNameQuery, [req.body.promotion]);
@@ -81,29 +77,7 @@ export const getUsersByPromotionName = async (req: Request, res: Response): Prom
 	}
 };
 
-export const updateUserScore = async (req: Request, res: Response): Promise<void> => {
-
-	const userChallengeResult: Omit<UserChallengeResult, "id" | "promoId" | "createdAt"> = {
-		userId: req.body.user_id,
-		challengeId: req.body.challenge_id,
-		score: req.body.score,
-	};
-
-	try {
-		const connection = await Connect();
-		const updateUserScore = await Query(connection, updateUserScoreQuery, [
-			userChallengeResult.score,
-			userChallengeResult.userId,
-			userChallengeResult.challengeId,
-		]);
-		res.status(200).send({ updateUserScore, message: "score update success" });
-		connection.end();
-	} catch (error) {
-		res.status(500).send({ error, message: "Connection failed" });
-	}
-};
-export const challenges = async (req: Request, res: Response): Promise<void> => {
-
+export const getChallenges = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const connection = await Connect();
 		const getChallenges = await Query(connection, getChallengesQuery);
@@ -116,7 +90,6 @@ export const challenges = async (req: Request, res: Response): Promise<void> => 
 };
 
 export const createResult = async (req: Request, res: Response): Promise<void> => {
-
 	const user: Result = {
 		email: req.body.email,
 		challenge_name: req.body.challenge_name,
@@ -139,7 +112,6 @@ export const createResult = async (req: Request, res: Response): Promise<void> =
 };
 
 export const getPromoName = async (req: Request, res: Response): Promise<void> => {
-
 	try {
 		const connection = await Connect();
 		const promotion = await Query(connection, getPromoNameQuery);

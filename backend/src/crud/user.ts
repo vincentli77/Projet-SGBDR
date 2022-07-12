@@ -7,12 +7,14 @@ promo_id = (SELECT id FROM Promotions WHERE Promotions.name = ?)`;
 export const getUserByMail = "SELECT * FROM Users WHERE email = ?";
 
 
-
- 
+/**
+ *
+ */
 export const createUser = `INSERT INTO Users 
 			SET ?, promo_id  = (SELECT id 
 				FROM Promotions 
 				WHERE Promotions.name = ?)`;
+
 export const createResult = `INSERT INTO Results 
 			SET user_id  = (SELECT id 
 				FROM Users 
@@ -28,7 +30,15 @@ export const createResult = `INSERT INTO Results
 /**
  *
  */
-export const updateUserScore = "UPDATE Results SET score=? WHERE user_id=? AND challenge_id=?";
-
-
-
+export const updateUserScore = `UPDATE Results SET score=? WHERE
+                user_id = (SELECT id 
+                FROM Users 
+                WHERE Users.email = ?)
+                AND
+                challenge_id  = (SELECT id 
+                FROM Challenges 
+                WHERE Challenges.name = ?)
+                AND
+                promo_id  = (SELECT id 
+                FROM Promotions 
+                WHERE Promotions.name = ?)`;

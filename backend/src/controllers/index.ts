@@ -1,11 +1,10 @@
-import { sshConnection } from "./ssh.controller";
+import { evaluationFlow } from "./ssh.controller";
 import { mailProvider, refreshToken, accessToken } from "../controllers/auth.controller";
 import {
 	getUsers,
 	createUser,
 	getUsersByPromotionName,
-	challenges,
-	updateUserScore,
+	getChallenges,
 	createResult,
 	getPromoName,
 	getUserByMail,
@@ -16,12 +15,11 @@ export {
 	mailProvider,
 	refreshToken,
 	accessToken,
-	sshConnection,
+	evaluationFlow,
 	getUsers,
 	createUser,
-	getUsersByPromotionName as getUsersPromo,
-	updateUserScore as updateScoreUser,
-	challenges,
+	getUsersByPromotionName,
+	getChallenges,
 	createResult,
 	getPromoName,
 	getUserByMail,
