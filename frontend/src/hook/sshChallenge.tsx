@@ -1,17 +1,13 @@
-export async function queryChallenge(data) {
+export async function sshChallenge(data) {
 	const email = { email: data.email };
 
 	return fetch("http://localhost:3333/mailProvider", {
-		method: "POST",
+		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify(email),
 	}).then((data) => {
-		if (data.status == 200) {
-			alert("Le mail a été envoyé");
-		} else {
-			alert("Un problème est survenue veuillez réessayer");
-		}
+		return data;
 	});
 }
