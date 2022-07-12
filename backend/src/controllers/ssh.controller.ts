@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
+import { StateMachineContext } from "../helpers/tests.sequencer";
 import { waitFor } from "xstate/lib/waitFor";
+import { SshUserConfig } from "../interfaces/ssh";
 import { sequencerService } from "../services/sequencer.service";
 
 interface ReqBody extends SshUserConfig {
@@ -7,6 +9,10 @@ interface ReqBody extends SshUserConfig {
 		name: string;
 		state: ReadonlyArray<string>;
 	};
+}
+
+interface _Response extends StateMachineContext {
+	succeedExercices: string[];
 }
 
 export const evaluationFlow = async (req: Request<unknown, unknown, ReqBody>, res: Response): Promise<void> => {
@@ -21,16 +27,60 @@ export const evaluationFlow = async (req: Request<unknown, unknown, ReqBody>, re
 
 	const sequencer = sequencerService({ host, port, username });
 
-	try {
-		!!event.state &&
-			event.state.forEach(async (eventState: ReadonlyArray<string>) => {
-				await waitFor(sequencer, (state) => state.matches(eventState), { timeout: 20000 });
+	let response: _Response = { ...sequencer.state.context, succeedExercices: [] };
 
-				sequencer.send(event.name);
+	try {
+		await waitFor(sequencer, (state) => state.matches("disconnected"), { timeout: 15000 });
+
+		sequencer.onTransition((state) => {
+			if (state.event.type === "done.invoke.uptime") {
+				response = {
+					...response,
+					score: state.context.score,
+					isConnected: state.context.isConnected,
+				};
+			}
+
+			if (state.event.type === "error.platform.uptime") {
+				response = {
+					...response,
+					score: state.context.score,
+					errorMessage: state.context.errorMessage,
+					isConnected: state.context.isConnected,
+				};
+			}
+		});
+
+		event &&
+			!!event.state.length &&
+			event.state.forEach(async (exercice) => {
+				try {
+					await waitFor(sequencer, (state) => state.matches(exercice), { timeout: 25000 });
+
+					sequencer.send(event.name);
+
+					sequencer.onTransition((state) => {
+						if (state.event.type === `done.invoke.${exercice}`) {
+							response = {
+								...response,
+								score: state.context.score,
+								succeedExercices: [...response.succeedExercices, exercice],
+							};
+						}
+
+						if (state.event.type === `error.platform.${exercice}`) {
+							response = {
+								...response,
+								score: state.context.score,
+								errorMessage: state.context.errorMessage,
+							};
+						}
+					});
+				} catch (error) {}
 			});
-	} catch (error) {
-		// Restart the machine
-		sequencer.start();
-		res.status(500).send("Ooups. Server Error. Restarting...");
-	}
+
+		sequencer.onChange((state) => {
+			if (state.errorMessage) res.status(200).send(response);
+		});
+	} catch (error) {}
 };
