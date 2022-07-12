@@ -16,7 +16,7 @@ function App() {
 	}
 	const user = JSON.parse(sessionStorage.getItem("user"));
 
-	if (!check_token && user[0].role !== "admin") {
+	if (!check_token) {
 		return <Login />;
 	}
 	if (user[0].role == "admin") {
