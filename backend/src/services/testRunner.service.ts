@@ -38,7 +38,13 @@ export const testRunnerService = async ({
 						})
 						.stderr.on("data", (data) => reject({ ...status, error: String(data) }));
 
-					_connection.end();
+					/**
+					 * We add a setTimeout to let some time to the ssh tunnel before close the connection
+					 * We ran into issues because we open, execute and close the tunnuel too fast
+					 * */
+					setTimeout(() => {
+						_connection.end();
+					}, 5000);
 				});
 			})
 			.connect(config);
