@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-export async function getUser(promotion) {
+export async function getUsers(promotion) {
 
 	const response = await fetch("http://localhost:3333/usersPromo", {
 		method: "GET",
