@@ -22,8 +22,7 @@ export const uptimeService = async (userConfig: SshUserConfig): Promise<Uptime> 
 				connection.end();
 			})
 			.on("error", (error) => {
-				status.error = `${error.level}`;
-				reject(error);
+				reject({ ...status, error: error.level });
 			})
 			.on("end", () => {
 				resolve(status);
