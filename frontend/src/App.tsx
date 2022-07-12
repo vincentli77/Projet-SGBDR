@@ -1,9 +1,13 @@
-import { Table } from "./Components/Table.component";
 import React from "react";
-import "./App.css";
-import { SideBar } from "./components/SideBar.component";
+import "./App.scss";
+import { Login } from "./Pages/Login/Login";
+import { checkToken } from "./hook/useCheckToken";
 
 function App() {
+	const check_token = checkToken();
+	if (!check_token) {
+		return <Login />;
+	}
 	return (
 		<div className="App">
 			<div className="AppGlass">

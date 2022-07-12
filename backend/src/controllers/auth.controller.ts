@@ -17,15 +17,17 @@ export const mailProvider = async (
 			message: "You didn't enter a valid email address.",
 		});
 	}
-
+	else{
 	transport.sendMail(mailOptions(body.email, accessToken), (error) => {
 		if (error) {
 			console.log(error);
 			return res.status(404).send("Cant'send email");
 		}
 
-		res.status(200).send(`Magic link sent. : http://localhost:3000/refresh?token=${accessToken}`);
+		res.status(200).send(`Magic link sent. : http://localhost:3333/refresh?token=${accessToken}`);
 	});
+	}
+
 };
 
 /**
@@ -67,6 +69,7 @@ export const refreshToken = (req: Request, res: Response, next: NextFunction) =>
  */
 export const accessToken = (req: Request, res: Response) => {
 	const authHeader = req.headers["authorization"];
+	
 	const refreshToken = authHeader && authHeader.split(" ")[1];
 
 	jwt.verify(refreshToken, process.env.TOKEN_SECRET_KEY, (err: any) => {

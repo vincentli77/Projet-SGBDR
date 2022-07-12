@@ -12,7 +12,7 @@ import { index } from "./routes/index";
 export const app = express();
 
 // Express configuration
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 3333);
 
 app.use(logger("dev"));
 
