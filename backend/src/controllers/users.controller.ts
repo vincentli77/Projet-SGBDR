@@ -10,6 +10,7 @@ import {
 	updateUserScore as updateUserScoreQuery,
 	createResult as createResultQuery,
 	getUserByMail as getUserByMailQuery,
+	getUserResult as getResultQuery,
 } from "../crud/user";
 import { User, UserChallengeResult, Result } from "../interfaces/user.interface";
 
@@ -66,7 +67,26 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 	}
 };
 
+export const getUserResult = async (req: Request, res: Response): Promise<void> => {
+	try {
+		
+		const connection = await Connect();
+		const users = await Query(connection, getResultQuery, [req.body.email,req.body.challenge_name,req.body.promotion_name]);
+
+		if (!users) {
+			res.status(404).send("No user found");
+			return;
+		}
+
+		res.status(200).send({ users, message: "get all users success" });
+		connection.end();
+	} catch (error) {
+		res.status(500).send({ error, message: "Connection failed" });
+	}
+};
+
 export const getUsersByPromotionName = async (req: Request, res: Response): Promise<void> => {
+	
 	try {
 		const connection = await Connect();
 		const getUsersByPromotionName = await Query(connection, getUsersByPromotionNameQuery, [req.body.promotion]);
@@ -90,6 +110,8 @@ export const getChallenges = async (req: Request, res: Response): Promise<void> 
 };
 
 export const createResult = async (req: Request, res: Response): Promise<void> => {
+	console.log(req.body);
+	
 	const user: Result = {
 		email: req.body.email,
 		challenge_name: req.body.challenge_name,
