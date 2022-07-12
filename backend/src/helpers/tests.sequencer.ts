@@ -1,6 +1,7 @@
 import { assign, createMachine, DoneInvokeEvent, send } from "xstate";
-import { SshUserConfig } from "../interfaces/ssh";
+import { SshUserConfig, Uptime } from "../interfaces/ssh";
 import { uptimeService } from "../services/uptime.service";
+import { EvaluationTestResult } from "../interfaces/evaluation.interface";
 import { exercice01, exercice02, exercice03, exercice04, exercice05 } from "../tests/exercices/index";
 
 // This function update the database with the new score and return the value to update the context
@@ -35,13 +36,15 @@ export const sequencer = createMachine({
 				onDone: {
 					target: "exercice01",
 					actions: assign({
-						isConnected: (context, event: DoneInvokeEvent<{ connected: boolean }>) => event.data.connected,
+						isConnected: (context, event: DoneInvokeEvent<Uptime>) => event.data.connected,
 						score: (context: StateMachineContext) => updateScore(context),
 					}),
 				},
 				onError: {
 					target: "termination",
-					actions: assign({ errorMessage: (context, event) => event.data }),
+					actions: assign({
+						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
+					}),
 				},
 			},
 		},
@@ -60,7 +63,9 @@ export const sequencer = createMachine({
 				},
 				onError: {
 					target: "exercice01",
-					actions: assign({ errorMessage: (context, event) => event.data }),
+					actions: assign({
+						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
+					}),
 				},
 			},
 		},
@@ -79,7 +84,9 @@ export const sequencer = createMachine({
 				},
 				onError: {
 					target: "exercice02",
-					actions: assign({ errorMessage: (context, event) => event.data }),
+					actions: assign({
+						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
+					}),
 				},
 			},
 		},
@@ -98,7 +105,9 @@ export const sequencer = createMachine({
 				},
 				onError: {
 					target: "exercice03",
-					actions: assign({ errorMessage: (context, event) => event.data }),
+					actions: assign({
+						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
+					}),
 				},
 			},
 		},
@@ -117,7 +126,9 @@ export const sequencer = createMachine({
 				},
 				onError: {
 					target: "termination",
-					actions: assign({ errorMessage: (context, event) => event.data }),
+					actions: assign({
+						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
+					}),
 				},
 			},
 		},
@@ -136,7 +147,9 @@ export const sequencer = createMachine({
 				},
 				onError: {
 					target: "exercice05",
-					actions: assign({ errorMessage: (context, event) => event.data }),
+					actions: assign({
+						errorMessage: (context, event: DoneInvokeEvent<EvaluationTestResult>) => event.data.error,
+					}),
 				},
 			},
 		},
