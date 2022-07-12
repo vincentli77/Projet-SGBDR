@@ -1,4 +1,3 @@
-import { log } from "console";
 import mysql, { ConnectionConfig } from "mysql";
 import config from "../config/database.config";
 

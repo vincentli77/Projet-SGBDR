@@ -22,12 +22,8 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 			return;
 		}
 
-		// connection.query(getUsersQuery, (error: MysqlError | null, result: User[]) => {
-		// 	if (error) return res.status(500).send({ error,message:'Get users failed' });
-
 			res.status(200).send({ users, message : "get all users success" });
 			connection.end();
-		// });
 	} catch (error) {
 		res.status(500).send({ error,message: "Connection failed" });
 	}
