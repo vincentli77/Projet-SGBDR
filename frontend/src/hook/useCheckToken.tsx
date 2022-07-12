@@ -18,8 +18,8 @@ export function checkToken() {
 	}
 
 	if (access_token && !refreshToken) {
-		const Alltoken = tokenRefresh(access_token);
-		Alltoken.then(function (result) {
+		tokenRefresh(access_token).then(function (result) {
+			if (result.error) return;
 			setRefreshToken(result.refreshToken);
 			sessionStorage.setItem("refresh_token", JSON.stringify(result.refreshToken));
 			setCheckToken(true);
