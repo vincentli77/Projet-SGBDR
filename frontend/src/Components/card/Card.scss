@@ -1,0 +1,91 @@
+
+/* ------------ Cards ------------- */
+
+
+.parentContainer {
+	width: 100%;
+}
+/* ------------ Card -------------- */
+.blue {
+	background: radial-gradient(circle, rgb(238, 174, 202) 0%, rgb(148, 187, 233) 100%);
+	box-shadow: rgb(238 174 202) 0px 10px 20px 0px;
+}
+
+.purple {
+	background: linear-gradient(rgb(187, 103, 255) 0%, rgb(196, 132, 243) 100%);
+	box-shadow: rgb(224 198 245) 0px 10px 20px 0px;
+}
+
+.pink {
+	background: linear-gradient(rgb(187, 103, 255) 0%, rgb(252, 146, 157) 100%);
+	box-shadow: rgb(253 192 199) 0px 10px 20px 0px;
+}
+
+.yellow {
+	background: linear-gradient(rgb(248, 212, 154) -146.42%, rgb(255, 202, 113) -46.42%);
+	box-shadow: rgb(249 213 155) 0px 10px 20px 0px;
+}
+
+.CompactCard {
+	display: flex;
+	flex: 1;
+	height: 7rem !important;
+	border-radius: 0.7rem;
+	color: white;
+	position: relative;
+	cursor: pointer;
+	padding: 1rem;
+}
+
+.CompactCard:hover {
+	box-shadow: none !important;
+}
+
+.radialBar {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	gap: 1rem;
+}
+
+.CircularProgressbar {
+	width: 4rem !important;
+	overflow: visible;
+}
+
+.CircularProgressbar-path {
+	stroke: white !important;
+	stroke-width: 12px !important;
+	filter: drop-shadow(2px 4px 6px white);
+}
+
+.CircularProgressbar-trail {
+	display: none;
+}
+
+.CircularPRogressbar-text {
+	fill: white !important;
+}
+
+.radialBar > span {
+	font-size: 17px;
+	font-weight: bold;
+}
+/* details */
+.detail {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+.detail > span:nth-child(2) {
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.detail > span:nth-child(3) {
+	font-size: 12px;
+}

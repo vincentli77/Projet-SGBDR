@@ -1,7 +1,8 @@
 import React from "react";
 import "./App.scss";
-import { Login } from "./Pages/Login/Login";
+import { Login } from "./Pages/login/Login";
 import { checkToken } from "./hook/useCheckToken";
+import { Dashboard } from "./Pages/Dashboard/Login/Dashboard";
 
 function App() {
 	const check_token = checkToken();
@@ -10,9 +11,7 @@ function App() {
 	}
 	return (
 		<div className="App">
-			<div className="AppGlass">
-				<SideBar />
-			</div>
+			<Dashboard />
 		</div>
 	);
 }

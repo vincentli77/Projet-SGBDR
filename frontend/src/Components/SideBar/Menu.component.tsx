@@ -4,8 +4,9 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { BsBookmark } from "react-icons/bs";
 import { FaSignOutAlt } from "react-icons/fa";
 
-import { Challenge } from "../interfaces/challenge.interface";
-import { Question } from "../interfaces/question.interface";
+import { Challenge } from "../../interfaces/challenge.interfaceace";
+import { Question } from "../../interfaces/question.interfaceace";
+import "./SideBar.scss";
 
 interface Props {
 	menuType: "challenges" | "tests";

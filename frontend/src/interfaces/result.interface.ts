@@ -8,6 +8,5 @@ export interface Result {
 }
 
 export interface Promo extends Result {
-	averageScore: number;
 	promoName: string;
 }
