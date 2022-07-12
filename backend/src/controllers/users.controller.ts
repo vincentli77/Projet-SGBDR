@@ -44,6 +44,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 	try {
 		const createUser = await Query(connection, createUserQuery, [user, req.body.promotion]);
 		res.status(200).send({ createUser, message: "User has been created" });
+		connection.end();
 	} catch (error) {
 		res.status(500).send({ error, message: "Connection failed" });
 	}
@@ -55,6 +56,7 @@ export const getUsersByPromotionName = async (req: Request, res: Response): Prom
 	try {
 		const getUsersByPromotionName = await Query(connection, getUsersByPromotionNameQuery, [req.body.promotion]);
 		res.status(200).send({ getUsersByPromotionName, message: "get users by promotion name success" });
+		connection.end();
 	} catch (error) {
 		res.status(500).send({ error, message: "Connection failed" });
 	}
@@ -76,6 +78,7 @@ export const updateUserScore = async (req: Request, res: Response): Promise<void
 			userChallengeResult.challengeId,
 		]);
 		res.status(200).send({ updateUserScore, message: "score update success" });
+		connection.end();
 	} catch (error) {
 		res.status(500).send({ error, message: "Connection failed" });
 	}
@@ -87,6 +90,7 @@ export const challenges = async (req: Request, res: Response): Promise<void> => 
 		const getChallenges = await Query(connection, getChallengesQuery);
 
 		res.status(200).send({ getChallenges, message: "get challenges success" });
+		connection.end();
 	} catch (error) {
 		res.status(500).send({ error, message: "Connection failed" });
 	}
@@ -109,6 +113,7 @@ export const createResult = async (req: Request, res: Response): Promise<void> =
 		]);
 
 		res.status(200).send({ createResult, message: "create result success" });
+		connection.end();
 	} catch (error) {
 		res.status(500).send({ error, message: "Connection failed" });
 	}
