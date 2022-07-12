@@ -1,14 +1,14 @@
 /* eslint-disable prettier/prettier */
-export async function getUser(token) {
+export async function getUser(promotion) {
 
-	const response = await fetch("http://localhost:3333/accessToken", {
+	const response = await fetch("http://localhost:3333/usersPromo", {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
-			"Authorization": "Bearer " + token,
 		},
+        body:promotion
 	});
-    const access_token = await response.json();
-    return access_token
+    const users = await response.json();
+    return users
     
 }

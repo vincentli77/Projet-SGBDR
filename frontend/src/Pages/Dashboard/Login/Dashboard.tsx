@@ -1,11 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CardDescription } from "../../../Components/card/CardDescription.component";
 import { SideBar } from "../../../Components/SideBar/SideBar.component";
 import { Table } from "../../../Components/Table.component";
+import { getUser } from "../../../hook/getUsers";
 import "./Dashboard.scss";
 
 export const Dashboard = (): JSX.Element => {
+	const [users, setUsers] = useState();
+	const promotion = "MT4_2022";
+
+	useEffect(() => {
+		getUser(promotion).then(function (result) {
+			setUsers(result);
+		});
+	}, []);
+
 	const promoTest = {
 		id: "1",
 		userId: "12312312",
@@ -14,13 +24,6 @@ export const Dashboard = (): JSX.Element => {
 		promoId: "21312312",
 		promoName: "MT_2022",
 		score: 0,
-	};
-
-	const userTest = {
-		email: "test@est.com",
-		score: 0,
-		firstname: "li",
-		lastname: "li",
 	};
 
 	return (
@@ -48,7 +51,7 @@ export const Dashboard = (): JSX.Element => {
 					</div>
 				</div>
 				<div>
-					<Table users={[userTest]} />
+					<Table users={users} />
 				</div>
 			</div>
 

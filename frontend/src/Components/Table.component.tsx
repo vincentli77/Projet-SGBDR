@@ -7,7 +7,7 @@ import { Paper, TableBody, TableHead } from "@mui/material";
 import { UserScore } from "../interfaces/user.interface";
 
 interface Props {
-	users: UserScore[];
+	users?: UserScore[];
 }
 
 export const Table = (props: Props): JSX.Element => {
@@ -20,7 +20,7 @@ export const Table = (props: Props): JSX.Element => {
 						<Header />
 					</TableHead>
 
-					<TableBody>{props.users.length > 0 && props.users.map((user) => <Row key={user.id} email={user.email} studentName={`${user.firstname} ${user.lastname}`} score={user.score} />)}</TableBody>
+					<TableBody>{props.users ? props.users.length > 0 && props.users.map((user, i) => <Row key={i} email={user.email} studentName={`${user.first_name} ${user.last_name}`} score={user.score} />) : null}</TableBody>
 				</MuiTable>
 			</TableContainer>
 		</div>
