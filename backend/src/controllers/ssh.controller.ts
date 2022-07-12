@@ -2,7 +2,14 @@ import { Request, Response } from "express";
 import { waitFor } from "xstate/lib/waitFor";
 import { sequencerService } from "../services/sequencer.service";
 
-export const evaluationFlow = async (req: Request, res: Response): Promise<void> => {
+interface ReqBody extends SshUserConfig {
+	event: {
+		name: string;
+		state: ReadonlyArray<string>;
+	};
+}
+
+export const evaluationFlow = async (req: Request<unknown, unknown, ReqBody>, res: Response): Promise<void> => {
 	const { host, port, username, event } = req?.body ?? {};
 
 	if (!host || !port || !username) {
