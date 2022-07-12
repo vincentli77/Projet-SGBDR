@@ -10,9 +10,11 @@ function App() {
 
 	const email = sessionStorage.getItem("email");
 	const role = sessionStorage.getItem("role");
-	getUserInfo({ email }).then(function (result) {
-		sessionStorage.setItem("role", result.user[0].role);
-	});
+	if (email) {
+		getUserInfo({ email }).then(function (result) {
+			sessionStorage.setItem("role", result.user[0].role);
+		});
+	}
 
 	if (!check_token) {
 		return <Login />;
