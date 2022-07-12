@@ -20,7 +20,7 @@ export const mailProvider = async (
 
 	transport.sendMail(mailOptions(body.email, accessToken), (error) => {
 		if (error) {
-			return res.status(404).send({ error,message : "Cant'send email" });
+			return res.status(404).send({ error, message: "Cant'send email" });
 		}
 
 		res.status(200).send(`Magic link sent. : http://localhost:3000/refresh?token=${accessToken}`);
@@ -47,7 +47,7 @@ export const refreshToken = (req: Request, res: Response, next: NextFunction) =>
 
 	jwt.verify(accessToken, process.env.TOKEN_SECRET_KEY, (error: any) => {
 		if (error) {
-			res.status(403).send({error,message:"Invalid auth credentials.}");
+			res.status(403).send({ error, message: "Invalid auth credentials." });
 			return;
 		}
 
@@ -70,7 +70,7 @@ export const accessToken = (req: Request, res: Response) => {
 
 	jwt.verify(refreshToken, process.env.TOKEN_SECRET_KEY, (error: any) => {
 		if (error) {
-			res.status(403).send({error,message:"Invalid auth credentials."}).redirect("/login");
+			res.status(403).send({ error, message: "Invalid auth credentials." }).redirect("/login");
 			return;
 		}
 

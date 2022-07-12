@@ -23,7 +23,7 @@ export interface UserChallengeResult {
 }
 
 export interface Result {
-	email: string,
-	challenge_name: string,
-	promotion_name: string,
+	email: string;
+	challenge_name: string;
+	promotion_name: string;
 }
