@@ -28,7 +28,8 @@ export function checkToken() {
 
 	if (access_token && refreshToken) {
 		const newAccessToken = accessRefresh(refreshToken);
-
+		const payload = JSON.parse(window.atob(refreshToken.split(".")[1]));
+		sessionStorage.setItem("email", payload.email);
 		newAccessToken.then(function (result) {
 			if (result.accessToken) {
 				sessionStorage.setItem("access_token", JSON.stringify(result.accessToken));
