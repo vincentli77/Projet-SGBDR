@@ -16,13 +16,13 @@ export const Dashboard = (): JSX.Element => {
 
 	useEffect(() => {
 		getPromotionName().then(function (result) {
-			setPromotions(result.promotion);
+			setPromotions(result.promotions);
 		});
 	}, []);
 
 	useEffect(() => {
 		getUserByPromotionName(promo).then(function (result) {
-			setUsers(result.getUsersByPromotionName);
+			setUsers(result.users);
 		});
 	}, [promo]);
 
@@ -43,8 +43,7 @@ export const Dashboard = (): JSX.Element => {
 			</div>
 
 			<div>
-				{" "}
-				<CardDescription cardType={"promo"} promoList={[promotions]} getCurrentPromo={getCurrentPromo} />
+				<CardDescription cardType={"promo"} promoList={promotions} getCurrentPromo={getCurrentPromo} />
 				<div>
 					<Table users={users} />
 				</div>

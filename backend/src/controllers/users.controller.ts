@@ -45,7 +45,7 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 export const getUserByMail = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const connection = await Connect();
-		const user = await Query(connection, getUserByMailQuery, [req.body.email]);
+		const user = await Query(connection, getUserByMailQuery, [req.query.email]);
 
 		if (!user.length) {
 			res.status(200).send("No user found");
@@ -67,6 +67,7 @@ export const getUserByMail = async (req: Request, res: Response): Promise<void> 
  * @param {Response} res - Response: This is the response object that will be sent back to the client.
  */
 export const createUser = async (req: Request, res: Response): Promise<void> => {
+	
 	const user: Omit<User, "id" | "promoId" | "createdAt"> = {
 		email: req.body.email,
 		first_name: req.body.firstname,
@@ -121,12 +122,16 @@ export const getUserResult = async (req: Request, res: Response): Promise<void> 
  * @returns An array of users
  */
 export const getUsersByPromotionName = async (req: Request, res: Response): Promise<void> => {
+	console.log(req.query.promotion);
+	
+	
 	try {
 		const connection = await Connect();
 		const usersByPromotionName: User[] = await Query(connection, getUsersByPromotionNameQuery, [
-			req.body.promotion,
+			req.query.promotion,
 		]);
 
+		
 		if (!usersByPromotionName.length) {
 			res.status(200).send({ users: usersByPromotionName, message: "No user found" });
 			return;
@@ -148,7 +153,6 @@ export const getUsersByPromotionName = async (req: Request, res: Response): Prom
  * @param {Response} res - Response - This is the response object that will be sent back to the client.
  */
 export const createResult = async (req: Request, res: Response): Promise<void> => {
-	console.log(req.body);
 
 	const user: UserResult = {
 		email: req.body.email,

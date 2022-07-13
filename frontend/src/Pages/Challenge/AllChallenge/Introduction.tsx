@@ -27,7 +27,7 @@ export const Introduction = (props: Props): JSX.Element => {
 		host: host,
 		port: port,
 		username: username,
-		user: userInfo,
+		userResult: userInfo,
 	};
 
 	function evaluation() {

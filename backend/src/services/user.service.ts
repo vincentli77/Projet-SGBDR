@@ -14,8 +14,9 @@ export const updateUserScoreService = async (
 ): Promise<number> => {
 	try {
 		const connection = await Connect();
-		console.log("TRY");
-
+		
+		console.log(score, user);
+				
 		const updatedScore: number = await Query(connection, updateUserScoreQuery, [
 			score,
 			user.email,

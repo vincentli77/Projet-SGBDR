@@ -1,13 +1,14 @@
 /* eslint-disable prettier/prettier */
 export async function getUserByPromotionName(promotion) {
 
+	console.log(promotion);
 	
-	const response = await fetch("http://localhost:3333/usersPromo", {
-		method: "POST",
+	
+	const response = await fetch(`http://localhost:3333/usersPromo/?promotion=${promotion.promotion}`, {
+		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
 		},
-        body: JSON.stringify(promotion),
 	});
     const users = await response.json();
 	
