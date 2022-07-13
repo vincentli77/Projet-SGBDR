@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
-import { User, Result } from "../interfaces/user.interface";
-import { Challenge } from "../interfaces/challenge";
-import { Promotion } from "../interfaces/promotion";
+import { User, UserResult } from "../interfaces/user.interface";
 import { Connect, Query } from "../services/database.service";
-import { getChallenges as getChallengesQuery } from "../crud/challenge";
-import { getPromotionsName as getPromoNameQuery } from "../crud/promotion";
 import {
 	getUsers as getUsersQuery,
 	createUser as createUserQuery,
@@ -14,6 +10,13 @@ import {
 	getUserResult as getResultQuery,
 } from "../crud/user";
 
+/**
+ * It connects to the database, queries the database for all users, and sends the response to the
+ * client
+ * @param {Request} req - Request - This is the request object that contains the request data.
+ * @param {Response} res - Response - This is the response object that will be sent back to the client.
+ * @returns An array of users
+ */
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const connection = await Connect();
@@ -32,6 +35,13 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 	}
 };
 
+/**
+ * It takes a request and a response, and returns a promise that resolves to a void
+ * @param {Request} req - Request - This is the request object that contains the data sent from the
+ * client.
+ * @param {Response} res - Response - This is the response object that will be sent back to the client.
+ * @returns The user object
+ */
 export const getUserByMail = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const connection = await Connect();
@@ -50,6 +60,12 @@ export const getUserByMail = async (req: Request, res: Response): Promise<void> 
 	}
 };
 
+/**
+ * It creates a user in the database
+ * @param {Request} req - Request - This is the request object that contains the data sent by the
+ * client.
+ * @param {Response} res - Response: This is the response object that will be sent back to the client.
+ */
 export const createUser = async (req: Request, res: Response): Promise<void> => {
 	const user: Omit<User, "id" | "promoId" | "createdAt"> = {
 		email: req.body.email,
@@ -70,11 +86,20 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 	}
 };
 
+/**
+ * It gets the result of a user for a specific challenge and promotion
+ * @param {Request} req - Request - The request object
+ * @param {Response} res - Response - the response object that will be sent back to the client
+ * @returns The user's result for a specific challenge
+ */
 export const getUserResult = async (req: Request, res: Response): Promise<void> => {
 	try {
-		
 		const connection = await Connect();
-		const users = await Query(connection, getResultQuery, [req.body.email,req.body.challenge_name,req.body.promotion_name]);
+		const users = await Query(connection, getResultQuery, [
+			req.body.email,
+			req.body.challenge_name,
+			req.body.promotion_name,
+		]);
 
 		if (!users) {
 			res.status(404).send("No user found");
@@ -88,8 +113,14 @@ export const getUserResult = async (req: Request, res: Response): Promise<void> 
 	}
 };
 
+/**
+ * It gets all the users from the database that have the same promotion name as the one passed in the
+ * request body
+ * @param {Request} req - Request - The request object
+ * @param {Response} res - Response: The response object that will be sent to the client.
+ * @returns An array of users
+ */
 export const getUsersByPromotionName = async (req: Request, res: Response): Promise<void> => {
-	
 	try {
 		const connection = await Connect();
 		const usersByPromotionName: User[] = await Query(connection, getUsersByPromotionNameQuery, [
@@ -109,28 +140,17 @@ export const getUsersByPromotionName = async (req: Request, res: Response): Prom
 	}
 };
 
-export const getChallenges = async (req: Request, res: Response): Promise<void> => {
-	try {
-		const connection = await Connect();
-		const challenges: Challenge[] = await Query(connection, getChallengesQuery);
-
-		if (!challenges.length) {
-			res.status(200).send({ challenges, message: "No chanllenge found" });
-			return;
-		}
-
-		res.status(200).send({ challenges, message: "success" });
-
-		connection.end();
-	} catch (error) {
-		res.status(500).send({ error, message: "Connection failed" });
-	}
-};
-
+/**
+ * It takes the request body, creates a user object, and then inserts that user object into the
+ * database
+ * @param {Request} req - Request - This is the request object that contains the data sent from the
+ * client.
+ * @param {Response} res - Response - This is the response object that will be sent back to the client.
+ */
 export const createResult = async (req: Request, res: Response): Promise<void> => {
 	console.log(req.body);
-	
-	const user: Result = {
+
+	const user: UserResult = {
 		email: req.body.email,
 		challenge_name: req.body.challenge_name,
 		promotion_name: req.body.promotion_name,
@@ -141,24 +161,6 @@ export const createResult = async (req: Request, res: Response): Promise<void> =
 		await Query(connection, createResultQuery, [user.email, user.challenge_name, user.promotion_name]);
 
 		res.status(200).send({ message: "success" });
-
-		connection.end();
-	} catch (error) {
-		res.status(500).send({ error, message: "Connection failed" });
-	}
-};
-
-export const getPromotions = async (req: Request, res: Response): Promise<void> => {
-	try {
-		const connection = await Connect();
-		const promotions: Promotion[] = await Query(connection, getPromoNameQuery);
-
-		if (!promotions.length) {
-			res.status(200).send({ promotions, message: "No promotion found" });
-			return;
-		}
-
-		res.status(200).send({ promotions, message: "success" });
 
 		connection.end();
 	} catch (error) {

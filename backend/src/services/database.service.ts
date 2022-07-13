@@ -9,6 +9,10 @@ const params: ConnectionConfig = {
 	password: config.mysql.password,
 };
 
+/**
+ * It creates a new connection to the database, and returns a promise that resolves to the connection
+ * if it succeeds, or rejects with an error if it fails
+ */
 const Connect = async (): Promise<mysql.Connection> =>
 	new Promise<mysql.Connection>((resolve, reject) => {
 		const connection = mysql.createConnection(params);
@@ -23,6 +27,13 @@ const Connect = async (): Promise<mysql.Connection> =>
 		});
 	});
 
+/**
+ * It's a wrapper for the `connection.query` function that returns a promise instead of using a
+ * callback
+ * @param connection - mysql.Connection - The connection to the database.
+ * @param {string} query - The query you want to run.
+ * @param [values] - The values to be inserted into the query.
+ */
 const Query = async (
 	connection: mysql.Connection,
 	query: string,

@@ -3,13 +3,10 @@ import { StateMachineContext } from "../helpers/tests.sequencer";
 import { waitFor } from "xstate/lib/waitFor";
 import { SshUserConfig } from "../interfaces/ssh";
 import { sequencerService } from "../services/sequencer.service";
+import { UserResult } from "../interfaces/user.interface";
 
 interface ReqBody extends SshUserConfig {
-	user: {
-		email: string;
-		promotion_name: string;
-		challenge_name: string;
-	};
+	userResult: UserResult;
 }
 
 interface _Response extends StateMachineContext {
@@ -17,7 +14,7 @@ interface _Response extends StateMachineContext {
 }
 
 export const evaluation = async (req: Request<unknown, unknown, ReqBody>, res: Response): Promise<void> => {
-	const { host, port, username, user } = req?.body ?? {};
+	const { host, port, username, userResult } = req?.body ?? {};
 
 	if (!host || !port || !username) {
 		res.status(401).send(
@@ -26,7 +23,7 @@ export const evaluation = async (req: Request<unknown, unknown, ReqBody>, res: R
 		return;
 	}
 
-	const sequencer = sequencerService({ host, port, username }, user);
+	const sequencer = sequencerService({ host, port, username }, userResult);
 
 	let response: _Response = { ...sequencer.state.context, succeedExercices: [] };
 

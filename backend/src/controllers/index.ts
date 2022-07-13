@@ -4,12 +4,12 @@ import {
 	getUsers,
 	createUser,
 	getUsersByPromotionName,
-	getChallenges,
 	createResult,
-	getPromotions,
 	getUserByMail,
 	getUserResult,
 } from "./users.controller";
+import { getPromotions } from "./promotion.controller";
+import { getChallenges } from "./challenge.controller";
 
 export {
 	mailProvider,

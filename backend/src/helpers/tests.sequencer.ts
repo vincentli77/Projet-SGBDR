@@ -4,11 +4,11 @@ import { uptimeService } from "../services/uptime.service";
 import { EvaluationTestResult } from "../interfaces/evaluation.interface";
 import { exercice01, exercice02, exercice03, exercice04, exercice05 } from "../tests/exercices/index";
 import { updateUserScoreService } from "../services/user.service";
-import { Result } from "../interfaces/user.interface";
+import { UserResult } from "../interfaces/user.interface";
 
 export interface StateMachineContext {
 	ssh: SshUserConfig;
-	user: Result; //TODO: Rename this shit
+	userResult: UserResult;
 	score: number;
 	isConnected: boolean;
 	errorMessage: string | undefined;
@@ -16,7 +16,7 @@ export interface StateMachineContext {
 
 export const stateMachineContext: StateMachineContext = {
 	ssh: { port: null, host: null, username: null } as SshUserConfig,
-	user: { email: null, challenge_name: null, promotion_name: null } as Result,
+	userResult: { email: null, challenge_name: null, promotion_name: null } as UserResult,
 	score: 0,
 	isConnected: false,
 	errorMessage: undefined,
@@ -52,7 +52,8 @@ export const sequencer = createMachine({
 		connected: {
 			invoke: {
 				id: "connection",
-				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				src: async (context: StateMachineContext) =>
+					await updateUserScoreService(context.userResult, context.score),
 				onDone: {
 					target: "exercice01",
 				},
@@ -85,7 +86,8 @@ export const sequencer = createMachine({
 		exercice01_success: {
 			invoke: {
 				id: "exercice01_success",
-				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				src: async (context: StateMachineContext) =>
+					await updateUserScoreService(context.userResult, context.score),
 				onDone: {
 					target: "exercice02",
 				},
@@ -118,7 +120,8 @@ export const sequencer = createMachine({
 		exercice02_success: {
 			invoke: {
 				id: "exercice02_success",
-				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				src: async (context: StateMachineContext) =>
+					await updateUserScoreService(context.userResult, context.score),
 				onDone: {
 					target: "exercice03",
 				},
@@ -151,7 +154,8 @@ export const sequencer = createMachine({
 		exercice03_success: {
 			invoke: {
 				id: "exercice03_success",
-				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				src: async (context: StateMachineContext) =>
+					await updateUserScoreService(context.userResult, context.score),
 				onDone: {
 					target: "exercice04",
 				},
@@ -184,7 +188,8 @@ export const sequencer = createMachine({
 		exercice04_success: {
 			invoke: {
 				id: "exercice04_success",
-				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				src: async (context: StateMachineContext) =>
+					await updateUserScoreService(context.userResult, context.score),
 				onDone: {
 					target: "exercice05",
 				},
@@ -217,7 +222,8 @@ export const sequencer = createMachine({
 		exercice05_success: {
 			invoke: {
 				id: "exercice05_success",
-				src: async (context: StateMachineContext) => await updateUserScoreService(context.user, context.score),
+				src: async (context: StateMachineContext) =>
+					await updateUserScoreService(context.userResult, context.score),
 				onDone: {
 					target: "termination",
 				},

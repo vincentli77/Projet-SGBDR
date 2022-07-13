@@ -1,5 +1,4 @@
-// TODO: [not urgent, not urgent]: find a better name
-export interface MailProvider {
+export interface Email {
 	email: string;
 }
 
@@ -22,8 +21,7 @@ export interface UserChallengeResult {
 	createdAt: string;
 }
 
-export interface Result {
-	//TODO: Remove all snake_case from this codebase
+export interface UserResult {
 	email: string;
 	challenge_name: string;
 	promotion_name: string;
