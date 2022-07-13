@@ -16,7 +16,7 @@ interface _Response extends StateMachineContext {
 	succeedExercices: string[];
 }
 
-export const evaluationFlow = async (req: Request<unknown, unknown, ReqBody>, res: Response): Promise<void> => {
+export const evaluation = async (req: Request<unknown, unknown, ReqBody>, res: Response): Promise<void> => {
 	const { host, port, username, user } = req?.body ?? {};
 
 	if (!host || !port || !username) {

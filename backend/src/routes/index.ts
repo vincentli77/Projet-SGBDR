@@ -3,16 +3,17 @@ import * as controller from "../controllers/index";
 
 export const index = Router();
 
-index.post("/evaluationFlow", controller.evaluationFlow);
+//evaluation tests
+index.post("/evaluation", controller.evaluation);
 
 //auth
 index.post("/mailProvider", controller.mailProvider);
 index.post("/refreshToken", controller.refreshToken);
 index.get("/accessToken", controller.accessToken);
+
 //crud users
 index.get("/users", controller.getUsers);
 index.post("/user", controller.getUserByMail);
-
 index.post("/user/create", controller.createUser);
 index.post("/result/create", controller.createResult);
 index.post("/result", controller.getUserResult);

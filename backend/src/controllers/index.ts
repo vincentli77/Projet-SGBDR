@@ -1,4 +1,4 @@
-import { evaluationFlow } from "./evaluation.controller";
+import { evaluation } from "./evaluation.controller";
 import { mailProvider, refreshToken, accessToken } from "../controllers/auth.controller";
 import {
 	getUsers,
@@ -15,7 +15,7 @@ export {
 	mailProvider,
 	refreshToken,
 	accessToken,
-	evaluationFlow,
+	evaluation,
 	getUsers,
 	createUser,
 	getUsersByPromotionName,
