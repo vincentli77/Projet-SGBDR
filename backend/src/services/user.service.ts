@@ -2,6 +2,12 @@ import { Connect, Query } from "./database.service";
 import { updateUserScore as updateUserScoreQuery } from "../crud/user";
 import { StateMachineContext } from "../helpers/tests.sequencer";
 
+/**
+ * It updates the user's score in the database
+ * @param user - StateMachineContext["userResult"]
+ * @param {number} score - number - The score to update the user's score to.
+ * @returns The updated score
+ */
 export const updateUserScoreService = async (
 	user: StateMachineContext["userResult"],
 	score: number,
