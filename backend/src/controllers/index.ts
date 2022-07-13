@@ -8,6 +8,7 @@ import {
 	createResult,
 	getPromoName,
 	getUserByMail,
+	getUserResult,
 
 } from "./users.controller";
 
@@ -23,4 +24,6 @@ export {
 	createResult,
 	getPromoName,
 	getUserByMail,
+	getUserResult,
+
 };

@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 export async function createResult(userInfo) {
+	
 
-	const response = await fetch("http://localhost:3333/result", {
+	const response = await fetch("http://localhost:3333/result/create", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

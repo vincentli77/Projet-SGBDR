@@ -5,6 +5,10 @@ export const getUsers = "SELECT * FROM Users";
 export const getUsersByPromotionName = `SELECT * FROM Users  WHERE 
 promo_id = (SELECT id FROM Promotions WHERE Promotions.name = ?)`;
 export const getUserByMail = "SELECT * FROM Users WHERE email = ?";
+export const getUserResult = `SELECT * FROM Results
+ WHERE user_id = (SELECT id FROM Users WHERE Users.email = ?)
+  AND challenge_id =(SELECT id FROM Challenges WHERE Challenges.name = ?)
+  AND promo_id  = (SELECT id FROM Promotions WHERE Promotions.name = ?);`;
 
 
 /**

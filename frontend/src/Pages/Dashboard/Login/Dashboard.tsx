@@ -1,61 +1,54 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import { CardDescription } from "../../../Components/card/CardDescription.component";
+import { ButtonAdd } from "../../../Components/buttons/ButtonAdd.component";
+import { CardDescription } from "../../../Components/main/CardDescription.component";
 import { SideBar } from "../../../Components/SideBar/SideBar.component";
-import { Table } from "../../../Components/Table.component";
-import { getUsers } from "../../../hook/getUsers";
+import { getPromotionName } from "../../../hook/getPromotionName";
+import { getUserByPromotionName } from "../../../hook/getUserByPromotionName";
+import { Table } from "../../../Components/table/Table.component";
+
 import "./Dashboard.scss";
 
 export const Dashboard = (): JSX.Element => {
 	const [users, setUsers] = useState();
-	const promotion = "MT4_2022";
+	const [promotions, setPromotions] = useState<any>([]);
+	const [promo, setPromo] = useState();
 
 	useEffect(() => {
-		getUsers(promotion).then(function (result) {
-			setUsers(result);
+		getPromotionName().then(function (result) {
+			setPromotions(result.promotion);
 		});
 	}, []);
 
-	const promoTest = {
-		id: "1",
-		userId: "12312312",
-		challengeId: "31312",
-		createdAt: "31/01",
-		promoId: "21312312",
-		promoName: "MT_2022",
-		score: 0,
+	useEffect(() => {
+		getUserByPromotionName(promo).then(function (result) {
+			setUsers(result.getUsersByPromotionName);
+		});
+	}, [promo]);
+
+	const getCurrentPromo = (data) => {
+		setPromo({ promotion: data });
 	};
 
 	return (
 		<div className="container">
-			<SideBar
-				challenges={[
-					{ id: "0", name: "Challenge 1" },
-					{ id: "0", name: "Challenge 2" },
-				]}
-			/>
+			<div>
+				<SideBar
+					challenges={[
+						{ id: "0", name: "Challenge 1" },
+						{ id: "1", name: "Challenge 2" },
+					]}
+				/>{" "}
+				<ButtonAdd />
+			</div>
 
 			<div>
-				<div className="Cards">
-					<div className="parrentContainer">
-						<CardDescription cardType={"promo"} promoList={[promoTest]} />
-					</div>
-					<div className="parrentContainer">
-						<CardDescription cardType={"promo"} promoList={[promoTest]} />
-					</div>
-					<div className="parrentContainer">
-						<CardDescription cardType={"promo"} promoList={[promoTest]} />
-					</div>
-					<div className="parrentContainer">
-						<CardDescription cardType={"promo"} promoList={[promoTest]} />
-					</div>
-				</div>
+				{" "}
+				<CardDescription cardType={"promo"} promoList={[promotions]} getCurrentPromo={getCurrentPromo} />
 				<div>
 					<Table users={users} />
 				</div>
 			</div>
-
-			{/* <CardDescription cardType={"question"} question={{ id: "1", name: "test", statement: "connectez vous" }} /> */}
 		</div>
 	);
 };

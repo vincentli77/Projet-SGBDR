@@ -14,9 +14,10 @@ index.get("/users", controller.getUsers);
 index.post("/user", controller.getUserByMail);
 
 index.post("/user/create", controller.createUser);
-index.post("/result", controller.createResult);
+index.post("/result/create", controller.createResult);
+index.post("/result", controller.getUserResult);
 index.get("/promoName", controller.getPromoName);
-index.get("/usersPromo", controller.getUsersByPromotionName);
+index.post("/usersPromo", controller.getUsersByPromotionName);
 index.get("/challenges", controller.getChallenges);
 
 index.get("/");

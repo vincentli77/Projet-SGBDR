@@ -76,7 +76,7 @@ export const accessToken = (req: Request, res: Response) => {
 			res.status(403).send({ error, message: "Invalid auth credentials." }).redirect("/login");
 			return;
 		}
-
+	
 		const accessToken = generateAccessToken(req.body.email);
 		res.status(200).send({ accessToken: accessToken });
 	});
