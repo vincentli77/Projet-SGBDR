@@ -7,11 +7,12 @@
 
 .container {
 	display: grid;
-	height: 97%;
-	width: 97%;
-	border-radius: 2rem;
+	height: 100%;
+	width: 100%;
+	// border-radius: 2rem;
 	background-color: var(--glass);
 	grid-template-columns: 11rem auto 15rem;
+	overflow: hidden;
 }
 .Cards {
 	overflow: scroll !important;
