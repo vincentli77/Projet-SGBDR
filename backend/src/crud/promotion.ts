@@ -1,1 +1,1 @@
-export const getPromoName = `SELECT name FROM Promotions `;
+export const getPromotionsName = `SELECT name FROM Promotions`;
