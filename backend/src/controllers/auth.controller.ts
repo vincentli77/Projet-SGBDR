@@ -5,6 +5,13 @@ import { generateAccessToken, generateRefreshToken } from "../services/auth/jwt.
 import { mailOptions } from "../config/mail.config";
 import { MailProvider } from "../interfaces/user.interface";
 
+/**
+ * It sends an email to the user with a magic link that contains a JWT token
+ * @param req - Request<Record<string, unknown>, Record<string, unknown>, MailProvider>
+ * @param {Response} res - Response - This is the response object that we'll use to send back a
+ * response to the client.
+ * @returns A function that takes in a request and a response.
+ */
 export const mailProvider = async (
 	req: Request<Record<string, unknown>, Record<string, unknown>, MailProvider>,
 	res: Response,
@@ -67,7 +74,7 @@ export const refreshToken = (req: Request, res: Response, next: NextFunction) =>
  */
 export const accessToken = (req: Request, res: Response) => {
 	const authHeader = req.headers["authorization"];
-	
+
 	const refreshToken = authHeader && authHeader.split(" ")[1];
 
 	jwt.verify(refreshToken, process.env.TOKEN_SECRET_KEY, (error: any) => {
