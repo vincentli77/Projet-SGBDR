@@ -1,4 +1,4 @@
-import { evaluationFlow } from "./ssh.controller";
+import { evaluationFlow } from "./evaluation.controller";
 import { mailProvider, refreshToken, accessToken } from "../controllers/auth.controller";
 import {
 	getUsers,
@@ -9,7 +9,6 @@ import {
 	getPromoName,
 	getUserByMail,
 	getUserResult,
-
 } from "./users.controller";
 
 export {
@@ -25,5 +24,4 @@ export {
 	getPromoName,
 	getUserByMail,
 	getUserResult,
-
 };
