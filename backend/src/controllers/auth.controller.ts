@@ -16,17 +16,16 @@ export const mailProvider = async (
 		res.status(404).send({
 			message: "You didn't enter a valid email address.",
 		});
+		return;
 	}
-	else{
+
 	transport.sendMail(mailOptions(body.email, accessToken), (error) => {
 		if (error) {
 			return res.status(404).send({ error, message: "Cant'send email" });
 		}
 
-		res.status(200).send(`Magic link sent. : http://localhost:3333/refresh?token=${accessToken}`);
+		res.status(200).send("Magic link sent.");
 	});
-	}
-
 };
 
 /**
