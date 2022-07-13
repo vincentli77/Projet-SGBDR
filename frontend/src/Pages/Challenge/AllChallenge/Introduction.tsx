@@ -1,8 +1,42 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useState } from "react";
+import { evaluationFlow } from "../../../hook/evaluationFlow";
 import "./introduction.scss";
 
-export const Introduction = (): JSX.Element => {
+interface Props {
+	getStep: any;
+}
+export const Introduction = (props: Props): JSX.Element => {
+	const [host, setHost] = useState(null);
+	const [port, setPort] = useState(null);
+	const [username, setUsername] = useState(null);
+
+	const userInfo = JSON.parse(sessionStorage.getItem("subsInfo"));
+
+	function HanddleHost(e) {
+		setHost(e.target.value);
+	}
+	function HandlePort(e) {
+		setPort(e.target.value);
+	}
+	function HandleRoot(e) {
+		setUsername(e.target.value);
+	}
+
+	const dataSSH = {
+		host: host,
+		port: port,
+		username: username,
+		user: userInfo,
+	};
+
+	function evaluation() {
+		evaluationFlow(dataSSH).then(function (result) {
+			sessionStorage.setItem("dataSSH", JSON.stringify(dataSSH));
+			props.getStep(result);
+		});
+	}
+
 	return (
 		<div className="App">
 			<div className="AppGlass">
@@ -30,17 +64,24 @@ export const Introduction = (): JSX.Element => {
 					<br></br>
 					<div>
 						<div className="input-test-one">
-							<input placeholder="Host: 192.0.0.1"></input>
+							<input placeholder="Host: 192.0.0.1" onChange={HanddleHost}></input>
 
-							<input placeholder="Port: 22"></input>
+							<input placeholder="Port: 22" onChange={HandlePort}></input>
 
-							<input placeholder="Username: root"></input>
+							<input placeholder="Username: root" onChange={HandleRoot}></input>
 						</div>
 					</div>
+					<p>cc</p>
 
 					<div className="buttons">
 						<div id="btn-wrapper">
-							<button className="check-btn" name="check-btn">
+							<button
+								className="check-btn"
+								name="check-btn"
+								onClick={() => {
+									evaluation();
+								}}
+							>
 								Tester la connexion
 							</button>
 						</div>

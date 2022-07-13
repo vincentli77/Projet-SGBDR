@@ -4,9 +4,11 @@ import { createResult } from "../../../hook/createResult";
 import { createUser } from "../../../hook/createUser";
 import "./introduction.scss";
 
-export const Subscribe = (): JSX.Element => {
-	const user = JSON.parse(sessionStorage.getItem("user"));
-	const email = user[0].email;
+interface Props {
+	subs: any;
+}
+export const Subscribe = (props: Props): JSX.Element => {
+	const email = sessionStorage.getItem("email");
 	const [firstname, setFirstName] = useState(null);
 	const [lastname, setLastname] = useState(null);
 	const [promotion, setPromotion] = useState("MT4_2022");
@@ -52,8 +54,13 @@ export const Subscribe = (): JSX.Element => {
 							className="check-btn"
 							name="check-btn"
 							onClick={() => {
-								createUser(createUserData);
-								createResult(createUserResult);
+								createUser(createUserData).then(function (result) {
+									console.log(result);
+									createResult(createUserResult).then(function (result) {
+										sessionStorage.setItem("subsInfo", JSON.stringify(createUserResult));
+										props.subs();
+									});
+								});
 							}}
 						>
 							Tester la connexion
