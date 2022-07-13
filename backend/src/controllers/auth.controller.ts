@@ -1,7 +1,7 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 import { transport } from "../services/mail.service";
-import { generateAccessToken, generateRefreshToken } from "../services/auth/jwt.service";
+import { generateAccessToken, generateRefreshToken } from "../services/jwt.service";
 import { mailOptions } from "../config/mail.config";
 import { Email } from "../interfaces/user.interface";
 
