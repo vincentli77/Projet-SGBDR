@@ -5,6 +5,13 @@ import { generateAccessToken, generateRefreshToken } from "../services/auth/jwt.
 import { mailOptions } from "../config/mail.config";
 import { MailProvider } from "../interfaces/user.interface";
 
+/**
+ * It sends an email to the user with a magic link that contains a JWT token
+ * @param req - Request<Record<string, unknown>, Record<string, unknown>, MailProvider>
+ * @param {Response} res - Response - This is the response object that we'll use to send back a
+ * response to the client.
+ * @returns A function that takes in a request and a response.
+ */
 export const mailProvider = async (
 	req: Request<Record<string, unknown>, Record<string, unknown>, MailProvider>,
 	res: Response,
@@ -16,17 +23,16 @@ export const mailProvider = async (
 		res.status(404).send({
 			message: "You didn't enter a valid email address.",
 		});
+		return;
 	}
-	else{
+
 	transport.sendMail(mailOptions(body.email, accessToken), (error) => {
 		if (error) {
 			return res.status(404).send({ error, message: "Cant'send email" });
 		}
 
-		res.status(200).send(`Magic link sent. : http://localhost:3333/refresh?token=${accessToken}`);
+		res.status(200).send("Magic link sent.");
 	});
-	}
-
 };
 
 /**
@@ -68,7 +74,7 @@ export const refreshToken = (req: Request, res: Response, next: NextFunction) =>
  */
 export const accessToken = (req: Request, res: Response) => {
 	const authHeader = req.headers["authorization"];
-	
+
 	const refreshToken = authHeader && authHeader.split(" ")[1];
 
 	jwt.verify(refreshToken, process.env.TOKEN_SECRET_KEY, (error: any) => {
