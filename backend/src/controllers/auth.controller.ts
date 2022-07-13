@@ -3,17 +3,17 @@ import { NextFunction, Request, Response } from "express";
 import { transport } from "../services/mail.service";
 import { generateAccessToken, generateRefreshToken } from "../services/auth/jwt.service";
 import { mailOptions } from "../config/mail.config";
-import { MailProvider } from "../interfaces/user.interface";
+import { Email } from "../interfaces/user.interface";
 
 /**
  * It sends an email to the user with a magic link that contains a JWT token
- * @param req - Request<Record<string, unknown>, Record<string, unknown>, MailProvider>
+ * @param req - Request<Record<string, unknown>, Record<string, unknown>, Email>
  * @param {Response} res - Response - This is the response object that we'll use to send back a
  * response to the client.
  * @returns A function that takes in a request and a response.
  */
 export const mailProvider = async (
-	req: Request<Record<string, unknown>, Record<string, unknown>, MailProvider>,
+	req: Request<Record<string, unknown>, Record<string, unknown>, Email>,
 	res: Response,
 ): Promise<void> => {
 	const body = req.body;
@@ -82,7 +82,7 @@ export const accessToken = (req: Request, res: Response) => {
 			res.status(403).send({ error, message: "Invalid auth credentials." }).redirect("/login");
 			return;
 		}
-	
+
 		const accessToken = generateAccessToken(req.body.email);
 		res.status(200).send({ accessToken: accessToken });
 	});

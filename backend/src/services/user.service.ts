@@ -2,7 +2,10 @@ import { Connect, Query } from "./database.service";
 import { updateUserScore as updateUserScoreQuery } from "../crud/user";
 import { StateMachineContext } from "../helpers/tests.sequencer";
 
-export const updateUserScoreService = async (user: StateMachineContext["user"], score: number): Promise<number> => {
+export const updateUserScoreService = async (
+	user: StateMachineContext["userResult"],
+	score: number,
+): Promise<number> => {
 	try {
 		const connection = await Connect();
 		console.log("TRY");

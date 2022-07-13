@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User, Result } from "../interfaces/user.interface";
+import { User, UserResult } from "../interfaces/user.interface";
 import { Connect, Query } from "../services/database.service";
 import {
 	getUsers as getUsersQuery,
@@ -110,7 +110,7 @@ export const getUsersByPromotionName = async (req: Request, res: Response): Prom
 export const createResult = async (req: Request, res: Response): Promise<void> => {
 	console.log(req.body);
 
-	const user: Result = {
+	const user: UserResult = {
 		email: req.body.email,
 		challenge_name: req.body.challenge_name,
 		promotion_name: req.body.promotion_name,
