@@ -6,7 +6,7 @@ import {
 	getUsersByPromotionName,
 	getChallenges,
 	createResult,
-	getPromoName,
+	getPromotions,
 	getUserByMail,
 	getUserResult,
 } from "./users.controller";
@@ -21,7 +21,7 @@ export {
 	getUsersByPromotionName,
 	getChallenges,
 	createResult,
-	getPromoName,
+	getPromotions,
 	getUserByMail,
 	getUserResult,
 };

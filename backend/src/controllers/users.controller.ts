@@ -138,7 +138,7 @@ export const createResult = async (req: Request, res: Response): Promise<void> =
 	}
 };
 
-export const getPromoName = async (req: Request, res: Response): Promise<void> => {
+export const getPromotions = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const connection = await Connect();
 		const promotion = await Query(connection, getPromoNameQuery);
