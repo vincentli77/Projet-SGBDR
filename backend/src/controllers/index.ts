@@ -6,10 +6,10 @@ import {
 	getUsersByPromotionName,
 	getChallenges,
 	createResult,
-	getPromotions,
 	getUserByMail,
 	getUserResult,
 } from "./users.controller";
+import { getPromotions } from "./promotion.controller";
 
 export {
 	mailProvider,

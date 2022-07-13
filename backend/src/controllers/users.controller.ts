@@ -1,10 +1,8 @@
 import { Request, Response } from "express";
 import { User, Result } from "../interfaces/user.interface";
 import { Challenge } from "../interfaces/challenge";
-import { Promotion } from "../interfaces/promotion";
 import { Connect, Query } from "../services/database.service";
 import { getChallenges as getChallengesQuery } from "../crud/challenge";
-import { getPromotionsName as getPromoNameQuery } from "../crud/promotion";
 import {
 	getUsers as getUsersQuery,
 	createUser as createUserQuery,
@@ -72,9 +70,12 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 
 export const getUserResult = async (req: Request, res: Response): Promise<void> => {
 	try {
-		
 		const connection = await Connect();
-		const users = await Query(connection, getResultQuery, [req.body.email,req.body.challenge_name,req.body.promotion_name]);
+		const users = await Query(connection, getResultQuery, [
+			req.body.email,
+			req.body.challenge_name,
+			req.body.promotion_name,
+		]);
 
 		if (!users) {
 			res.status(404).send("No user found");
@@ -89,7 +90,6 @@ export const getUserResult = async (req: Request, res: Response): Promise<void> 
 };
 
 export const getUsersByPromotionName = async (req: Request, res: Response): Promise<void> => {
-	
 	try {
 		const connection = await Connect();
 		const usersByPromotionName: User[] = await Query(connection, getUsersByPromotionNameQuery, [
@@ -129,7 +129,7 @@ export const getChallenges = async (req: Request, res: Response): Promise<void> 
 
 export const createResult = async (req: Request, res: Response): Promise<void> => {
 	console.log(req.body);
-	
+
 	const user: Result = {
 		email: req.body.email,
 		challenge_name: req.body.challenge_name,
@@ -141,24 +141,6 @@ export const createResult = async (req: Request, res: Response): Promise<void> =
 		await Query(connection, createResultQuery, [user.email, user.challenge_name, user.promotion_name]);
 
 		res.status(200).send({ message: "success" });
-
-		connection.end();
-	} catch (error) {
-		res.status(500).send({ error, message: "Connection failed" });
-	}
-};
-
-export const getPromotions = async (req: Request, res: Response): Promise<void> => {
-	try {
-		const connection = await Connect();
-		const promotions: Promotion[] = await Query(connection, getPromoNameQuery);
-
-		if (!promotions.length) {
-			res.status(200).send({ promotions, message: "No promotion found" });
-			return;
-		}
-
-		res.status(200).send({ promotions, message: "success" });
 
 		connection.end();
 	} catch (error) {
