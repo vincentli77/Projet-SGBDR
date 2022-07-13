@@ -15,7 +15,7 @@ CREATE TABLE Challenges
 CREATE TABLE Users
 (
     `id`          VARCHAR(36)     NOT NULL    DEFAULT ( uuid() )    PRIMARY KEY,
-    `email`       VARCHAR(320)    NOT NULL, 
+    `email`       VARCHAR(320)    NOT NULL UNIQUE,
     `first_name`  VARCHAR(50)     NOT NULL, 
     `last_name`   VARCHAR(50)     NOT NULL, 
     `role`        CHAR(7)         NOT NULL, 
