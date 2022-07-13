@@ -19,12 +19,12 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 		const connection = await Connect();
 		const users: User[] = await Query(connection, getUsersQuery);
 
-		if (!users) {
-			res.status(404).send("No user found");
+		if (!users.length) {
+			res.status(200).send({ users, message: "No user found" });
 			return;
 		}
 
-		res.status(200).send({ users, message: "get all users success" });
+		res.status(200).send({ users, message: "success" });
 
 		connection.end();
 	} catch (error) {
@@ -35,14 +35,14 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 export const getUserByMail = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const connection = await Connect();
-		const user: User = await Query(connection, getUserByMailQuery, [req.body.email]);
+		const user = await Query(connection, getUserByMailQuery, [req.body.email]);
 
-		if (!user) {
-			res.status(404).send("No user found");
+		if (!user.length) {
+			res.status(200).send("No user found");
 			return;
 		}
 
-		res.status(200).send({ user, message: "get  user info success" });
+		res.status(200).send({ user, message: "success" });
 
 		connection.end();
 	} catch (error) {
@@ -96,7 +96,12 @@ export const getUsersByPromotionName = async (req: Request, res: Response): Prom
 			req.body.promotion,
 		]);
 
-		res.status(200).send({ getUsersByPromotionName, message: "get users by promotion name success" });
+		if (!usersByPromotionName.length) {
+			res.status(200).send({ users: usersByPromotionName, message: "No user found" });
+			return;
+		}
+
+		res.status(200).send({ users: usersByPromotionName, message: "success" });
 
 		connection.end();
 	} catch (error) {
@@ -109,7 +114,12 @@ export const getChallenges = async (req: Request, res: Response): Promise<void> 
 		const connection = await Connect();
 		const challenges: Challenge[] = await Query(connection, getChallengesQuery);
 
-		res.status(200).send({ getChallenges, message: "get challenges success" });
+		if (!challenges.length) {
+			res.status(200).send({ challenges, message: "No chanllenge found" });
+			return;
+		}
+
+		res.status(200).send({ challenges, message: "success" });
 
 		connection.end();
 	} catch (error) {
@@ -134,7 +144,7 @@ export const createResult = async (req: Request, res: Response): Promise<void> =
 			user.promotion_name,
 		]);
 
-		res.status(200).send({ createResult, message: "create result success" });
+		res.status(200).send({ message: "success" });
 
 		connection.end();
 	} catch (error) {
@@ -147,12 +157,12 @@ export const getPromotions = async (req: Request, res: Response): Promise<void> 
 		const connection = await Connect();
 		const promotions: Promotion[] = await Query(connection, getPromoNameQuery);
 
-		if (!promotion) {
-			res.status(404).send("No promo found");
+		if (!promotions.length) {
+			res.status(200).send({ promotions, message: "No promotion found" });
 			return;
 		}
 
-		res.status(200).send({ promotion, message: "get all promo name success" });
+		res.status(200).send({ promotions, message: "success" });
 
 		connection.end();
 	} catch (error) {
