@@ -60,9 +60,9 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 
 	try {
 		const connection = await Connect();
-		const createUser = await Query(connection, createUserQuery, [user, req.body.promotion]);
+		await Query(connection, createUserQuery, [user, req.body.promotion]);
 
-		res.status(200).send({ createUser, message: "User has been created" });
+		res.status(200).send({ message: "User has been created" });
 
 		connection.end();
 	} catch (error) {
@@ -138,11 +138,7 @@ export const createResult = async (req: Request, res: Response): Promise<void> =
 
 	try {
 		const connection = await Connect();
-		const createResult = await Query(connection, createResultQuery, [
-			user.email,
-			user.challenge_name,
-			user.promotion_name,
-		]);
+		await Query(connection, createResultQuery, [user.email, user.challenge_name, user.promotion_name]);
 
 		res.status(200).send({ message: "success" });
 
