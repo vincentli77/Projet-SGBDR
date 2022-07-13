@@ -57,6 +57,8 @@ export const Subscribe = (props: Props): JSX.Element => {
 								createUser(createUserData).then(function (result) {
 									console.log(result);
 									createResult(createUserResult).then(function (result) {
+										console.log(result);
+
 										sessionStorage.setItem("subsInfo", JSON.stringify(createUserResult));
 										props.subs();
 									});

@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 export async function evaluationFlow(userInfo) {
-
-	const response = await fetch("http://localhost:3333/evaluationFlow", {
+ 
+	const response = await fetch("http://localhost:3333/evaluation", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

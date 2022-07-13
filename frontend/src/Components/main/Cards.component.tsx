@@ -11,7 +11,7 @@ export const Cards = (props: Props): JSX.Element => {
 
 	return (
 		<div className="Cards">
-			<div>{props.promos.length > 0 && props.promos[0].map((promo, i) => <Card getCurrentPromo={props.getCurrentPromo} key={i} promoName={promo.name} type={"blue"} />)}</div>
+			<div>{props.promos.length > 0 && props.promos.map((promo, i) => <Card getCurrentPromo={props.getCurrentPromo} key={i} promoName={promo.name} type={"blue"} />)}</div>
 		</div>
 	);
 };

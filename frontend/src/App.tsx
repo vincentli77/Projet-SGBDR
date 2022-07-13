@@ -14,7 +14,7 @@ function App() {
 	const storeUser = () => {
 		const email = sessionStorage.getItem("email");
 		if (email) {
-			getUserInfo({ email }).then(function (result) {
+			getUserInfo(email).then(function (result) {
 				sessionStorage.setItem("user", JSON.stringify(result.user));
 				setUser(JSON.parse(sessionStorage.getItem("user")));
 			});
